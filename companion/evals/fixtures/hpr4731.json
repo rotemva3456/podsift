@@ -1,0 +1,35 @@
+{
+  "episode_id": "hpr4731",
+  "title": "A Website Hacked",
+  "show": "Hacker Public Radio",
+  "attribution": "\"A Website Hacked\" by Lee, Hacker Public Radio (https://hackerpublicradio.org/), licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). See ATTRIBUTION.md.",
+  "transcript": {"format": "srt", "path": "companion/evals/fixtures/hpr4731.srt"},
+  "label": {
+    "verdict": "HEAR",
+    "verdict_reason": "A first-person incident story with real investigation reasoning and a judgment call not to blindly roll back — best heard, not looked up.",
+    "chapters": [
+      {"segment_index": 6, "title": "The charity's website and its hosting history"},
+      {"segment_index": 70, "title": "The WP2Shell hack: two CVEs chained together"},
+      {"segment_index": 145, "title": "Investigation concludes: the patch already held"}
+    ],
+    "key_ideas": [
+      {"text": "The charity's WordPress site was compromised through \"WP2Shell\", an exploit chaining two 2026 CVEs together; the same technique hit hundreds or thousands of sites worldwide, not just this one.",
+       "segment_indices": [70, 71]},
+      {"text": "Rather than blindly follow the host's suggestion to roll the site back a week and a half, Lee checked with the charity first, since a lot of real data had been entered ahead of a big event, then investigated instead.",
+       "segment_indices": [77, 79, 80, 81, 83]},
+      {"text": "The investigation method: an offline database export plus an SSH tar of the file tree, checked with an LLM coding tool, then verified core WordPress files against their checksums, matched every user account, and reviewed site options and content for hidden payloads.",
+       "segment_indices": [84, 86, 87, 92, 93, 96, 98, 113, 116]},
+      {"text": "Two suspicious file-manager scripts turned out to be Lee's own leftover admin tools from a prior migration, restored by the site's own backup and never actually exploited — a reminder to verify before assuming the worst.",
+       "segment_indices": [126, 127, 128, 132, 135, 139]},
+      {"text": "The investigation concluded the mitigation patch was already applied and nothing malicious persisted, so the rollback and its week and a half of lost data were not necessary; Lee still rotated the admin passwords as a precaution.",
+       "segment_indices": [145, 146, 147, 152]}
+    ],
+    "cut_request": {
+      "want": "what got hacked, how it was investigated, and how it was fixed",
+      "skip": "the general WordPress block editor and CMS commentary, and the other community group's lavender-pick website",
+      "minutes": 5,
+      "must_keep_segment_indices": [70, 83, 84, 93, 113, 121, 145, 148],
+      "never_keep_segment_indices": [44, 45, 59, 63, 65, 159, 161, 163]
+    }
+  }
+}

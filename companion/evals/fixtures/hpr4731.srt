@@ -1,0 +1,768 @@
+1
+00:00:00,000 --> 00:00:13,200
+This is Hacker Public Radio Episode 4731, for 2026-09-21
+
+2
+00:00:13,200 --> 00:00:16,400
+Today's show is entitled, "A Website Hacked"
+
+3
+00:00:16,400 --> 00:00:20,040
+The host is Lee and the duration is 00:13:48
+
+4
+00:00:20,040 --> 00:00:22,080
+The flag is Clean, and the license is CC-BY-SA
+
+5
+00:00:22,080 --> 00:00:27,320
+The summary is "About an encounter with wp2shell that was not so bad"
+
+6
+00:00:40,000 --> 00:00:44,000
+Hi, I'm Lee. This is the story of the website getting hacked.
+
+7
+00:00:44,000 --> 00:00:47,000
+The first is the story of the website itself.
+
+8
+00:00:47,000 --> 00:00:52,000
+The website belongs to a charity. The organized farmers' markets once a month,
+
+9
+00:00:52,000 --> 00:00:57,000
+also several sessions each week of inclusive cycling at local track named after a
+
+10
+00:00:57,000 --> 00:01:01,000
+Paralympic athlete who won gold medals when the Olympics was hosted here.
+
+11
+00:01:01,000 --> 00:01:07,000
+There were also a few sessions a week for community food grind and various other things.
+
+12
+00:01:07,000 --> 00:01:12,000
+The website was originally hosted by the same company the domain name was bought from.
+
+13
+00:01:12,000 --> 00:01:18,000
+VAs the charity would pay a lot for SSL stiff cuts and full website hosting.
+
+14
+00:01:18,000 --> 00:01:23,000
+That year as I'd go, the DNS got screwed up, apparently because they were transferring
+
+15
+00:01:23,000 --> 00:01:25,000
+hosting to a different day to centre.
+
+16
+00:01:25,000 --> 00:01:29,000
+And when I called the support line, they were completely unable to tell me the IP address
+
+17
+00:01:29,000 --> 00:01:32,000
+of the server the website was currently on.
+
+18
+00:01:32,000 --> 00:01:37,000
+I suggested to the charity that they cut their losses and temporarily let me
+
+19
+00:01:37,000 --> 00:01:41,000
+set up a VPS and migrated there until it was actually time as a new hosting
+
+20
+00:01:41,000 --> 00:01:43,000
+provided we found.
+
+21
+00:01:43,000 --> 00:01:47,000
+Since the website was on WordPress, it was soon possible to find some very good
+
+22
+00:01:47,000 --> 00:01:51,000
+value WordPress hosting for more reliable provider.
+
+23
+00:01:51,000 --> 00:01:57,000
+The SSL stiff cut was no longer a problem as it was included for no extra cost.
+
+24
+00:01:58,000 --> 00:02:03,000
+Anyway, that was a year or so ago so it then got migrated there.
+
+25
+00:02:03,000 --> 00:02:08,000
+My great and WordPress site can be as simple as backing up then restoring the database
+
+26
+00:02:08,000 --> 00:02:12,000
+copying the files to the new server and plugging in some configuration values
+
+27
+00:02:12,000 --> 00:02:15,000
+to match the new environment.
+
+28
+00:02:15,000 --> 00:02:22,000
+For this task I'd be using PHP, my admin to grab the SQL and possibly follow ZL to copy files.
+
+29
+00:02:23,000 --> 00:02:27,000
+In practice things could get more complicated, sometimes various database tables
+
+30
+00:02:27,000 --> 00:02:31,000
+might need updating, especially if the domain name was different.
+
+31
+00:02:31,000 --> 00:02:34,000
+There are lots of tools and plugins to help with this.
+
+32
+00:02:34,000 --> 00:02:38,000
+Often in the past I'd just be writing my own PHP script to grab back-ups
+
+33
+00:02:38,000 --> 00:02:43,000
+over HTDPS, especially since the provider that used to host the website
+
+34
+00:02:43,000 --> 00:02:48,000
+has some kind of throttling limits on FTP downloads.
+
+35
+00:02:49,000 --> 00:02:53,000
+While in the early days of this website there was a lot of interventionated.
+
+36
+00:02:53,000 --> 00:02:56,000
+It's actually been running apparently smoothly for some time,
+
+37
+00:02:56,000 --> 00:02:59,000
+and performing much better with the new hosts.
+
+38
+00:02:59,000 --> 00:03:04,000
+In retrospect I guess the server upgrades are led to the problems that sort of squit the old provider
+
+39
+00:03:04,000 --> 00:03:10,000
+or most likely in attempt by them to improve their performance to something acceptable.
+
+40
+00:03:10,000 --> 00:03:16,000
+Anyway, now that the website does it say no to our dates with little technical maintenance required,
+
+41
+00:03:16,000 --> 00:03:20,000
+the users can just log in and focus on updating content.
+
+42
+00:03:20,000 --> 00:03:24,000
+One considerable change of the years has been going back to using the built-in editor
+
+43
+00:03:24,000 --> 00:03:30,000
+rather than plugins that improve the editing experience at the expense of adding layers of complexity.
+
+44
+00:03:30,000 --> 00:03:34,000
+WordPress is modern editor is called the block editor,
+
+45
+00:03:34,000 --> 00:03:38,000
+and it's just that a way of composing pages from a sequence of blocks,
+
+46
+00:03:38,000 --> 00:03:41,000
+including ones that can contain other blocks.
+
+47
+00:03:42,000 --> 00:03:48,000
+To me this is a big improvement from a simplicity and usability perspective once you get how it works.
+
+48
+00:03:48,000 --> 00:03:56,000
+In terms of referring all the tricks people would have to go to make things look right from the task of actually producing content.
+
+49
+00:03:56,000 --> 00:04:00,000
+Another recent improvement of WordPress that have not really looked into too much myself
+
+50
+00:04:00,000 --> 00:04:07,000
+is that you can now edit what you see rather than having to work out what level of the presentation the thing you want to edit is that.
+
+51
+00:04:07,000 --> 00:04:11,000
+For example, is it a fixed header that is global to the whole website?
+
+52
+00:04:11,000 --> 00:04:14,000
+Or is it something specific to a particular page?
+
+53
+00:04:14,000 --> 00:04:20,000
+Now it does not matter so much whichever it is when you try to edit it the system adapts to let you.
+
+54
+00:04:20,000 --> 00:04:29,000
+I might be able to stay in these improvements in some ways that there to address fundamental issues with dynamic content management systems like WordPress.
+
+55
+00:04:29,000 --> 00:04:34,000
+These are, they're almost slightly because the management code runs alongside the presentation code.
+
+56
+00:04:34,000 --> 00:04:37,000
+They're cashing helps with that somewhat.
+
+57
+00:04:37,000 --> 00:04:46,000
+Anything style code in online text editors, it definitely leads to confusion of purpose between what you want to say and how you want to style and present it.
+
+58
+00:04:46,000 --> 00:04:53,000
+What you see is not what you get because the final presentation is built from very schematic and presentation or layers.
+
+59
+00:04:53,000 --> 00:04:59,000
+On a subject of style, what you can choose to template that defines the overall look and feel of your site.
+
+60
+00:04:59,000 --> 00:05:05,000
+I've always found this needed tweaking for particular purposes you need to what the stateholders required from the site.
+
+61
+00:05:05,000 --> 00:05:09,000
+Luckily WordPress has a custom CSS area where this can be sorted.
+
+62
+00:05:09,000 --> 00:05:15,000
+The last bit of work along these lines we're mentioning was set in an up and up valid dark made for the site.
+
+63
+00:05:15,000 --> 00:05:23,000
+Another thing about WordPress in particular that partly true of other content management systems is that there are thousands of plugins.
+
+64
+00:05:23,000 --> 00:05:33,000
+If you can think of a particular functionality in my one or a service that you might want to integrate website with, there's probably a plugin or two or three for that.
+
+65
+00:05:33,000 --> 00:05:43,000
+The disadvantage of making the system so general purpose that fits every use case is that you end up exposing the full complexity of the underlying system.
+
+66
+00:05:43,000 --> 00:05:48,000
+If something does one thing well, it is generally easy to minimize the attack surface.
+
+67
+00:05:48,000 --> 00:05:53,000
+That is the number of possible ways something external could interact with it in a malicious way.
+
+68
+00:05:53,000 --> 00:05:59,000
+But when a system does so many possible things it inevitably has many vulnerabilities.
+
+69
+00:05:59,000 --> 00:06:11,000
+They can as a whole the WordPress ecosystem, which I guess includes plugins and such, has about 35,000 known issues in counting in the common vulnerabilities and exposure state base.
+
+70
+00:06:12,000 --> 00:06:34,000
+So for the character's website to get hacked, it took just two of these CVA 2026 6030 and CVA 2026 60137 been exploited together in a new way called by the smart folks who think of exploit names WP to shell.
+
+71
+00:06:34,000 --> 00:06:39,000
+And it was not just this website but hundreds and thousands all across the interwebs.
+
+72
+00:06:39,000 --> 00:06:47,000
+The first thing on your bet any of this was an email from the hosting provider, urging users to quickly apply patch that would seal this hole.
+
+73
+00:06:47,000 --> 00:06:54,000
+I complied it was just a matter of manually tain WordPress to update a minor version and it was done.
+
+74
+00:06:54,000 --> 00:07:00,000
+But the trouble is just because you've sealed a hole, it does not mean the boat has not run to take an unwater.
+
+75
+00:07:00,000 --> 00:07:10,000
+A week later the hosting provider got in touch again, they said they had evidence that something or other had been modified or accessed by to the patch being applied.
+
+76
+00:07:10,000 --> 00:07:16,000
+This sounded bad, it could be the site was infected with scripts then who knows what mischief.
+
+77
+00:07:16,000 --> 00:07:22,000
+The provider recommended rolling the site back by a week and a half to before the malicious access occurred.
+
+78
+00:07:22,000 --> 00:07:28,000
+Then immediately reapplying the security patch this time making sure nothing had been tampered with.
+
+79
+00:07:28,000 --> 00:07:32,000
+However before blindly abaying I thought I checked with the charity manager.
+
+80
+00:07:32,000 --> 00:07:37,000
+As I suspected the staff were busy with the run up to the big fan next month.
+
+81
+00:07:37,000 --> 00:07:41,000
+Over a hundred stalls potentially 10,000 visitors.
+
+82
+00:07:41,000 --> 00:07:47,000
+There was potentially a lot of data that had been input recently that would be lost if I rolled back.
+
+83
+00:07:47,000 --> 00:07:52,000
+So I suggested I take a good look and see what exactly the damage was to the site.
+
+84
+00:07:52,000 --> 00:07:56,000
+My first step was to take an offline backup of the database.
+
+85
+00:07:56,000 --> 00:08:01,000
+As I mentioned before I used PHP my admin's export feature for this.
+
+86
+00:08:01,000 --> 00:08:11,000
+I used the 200 megabyte SQL script tip produced to populate my own instance of MariaDB so I could query it will without affecting the life site.
+
+87
+00:08:11,000 --> 00:08:20,000
+I also SSHed into the web space tied the contents folder and then GZPed it to a folder on my hard disk.
+
+88
+00:08:20,000 --> 00:08:29,000
+In that tab all were 2.9 gigabytes of files including both media and the scripts that comprise the running system itself.
+
+89
+00:08:29,000 --> 00:08:39,000
+This was not just for forensic purposes but downloads could potentially be used to restore articles and media even if the rollback turned out to be necessary.
+
+90
+00:08:39,000 --> 00:08:45,000
+And while I know my way around work presses internal structure somewhat having written my own plugins for example.
+
+91
+00:08:45,000 --> 00:08:48,000
+I did not want my humanized to miss anything important.
+
+92
+00:08:48,000 --> 00:08:54,000
+So I asked the cloud based LLM coding tool to produce both the database and downloaded files.
+
+93
+00:08:54,000 --> 00:08:59,000
+Firstly I was able to check that each of the users on the system could be accounted for.
+
+94
+00:08:59,000 --> 00:09:02,000
+So no new users had been added.
+
+95
+00:09:02,000 --> 00:09:06,000
+Also there was no strange or unusual session activity for those users.
+
+96
+00:09:06,000 --> 00:09:08,000
+Then the various site options were examined.
+
+97
+00:09:08,000 --> 00:09:13,000
+The sort of things people generally customize those all seem normal too.
+
+98
+00:09:13,000 --> 00:09:20,000
+Then the contents of the site itself the posts and pages all were true to topic and like hidden payloads.
+
+99
+00:09:20,000 --> 00:09:29,000
+Finally the scope of damage was discovered and it was mainly linked to data revisions and as customized change set posts.
+
+100
+00:09:29,000 --> 00:09:34,000
+And these changes were not even live and only contained dummy URLs.
+
+101
+00:09:34,000 --> 00:09:42,000
+There was also some innocuous activities to do with caching in the OEM bed cache a few day subsequent to the first access.
+
+102
+00:09:42,000 --> 00:09:44,000
+The first changes happened in the early hours.
+
+103
+00:09:44,000 --> 00:09:48,000
+A week and a half ago just as the webposting for 500 hinted up.
+
+104
+00:09:48,000 --> 00:09:52,000
+They had been entered with four-jump administrative level access.
+
+105
+00:09:52,000 --> 00:09:54,000
+Not for an actual real login.
+
+106
+00:09:54,000 --> 00:09:58,000
+A trick had been used to lay a one exploit on another and get access.
+
+107
+00:09:58,000 --> 00:10:01,000
+There would be otherwise impossible.
+
+108
+00:10:01,000 --> 00:10:04,000
+Almost certainly there's been done by an automated script.
+
+109
+00:10:04,000 --> 00:10:09,000
+Scanning thousands of websites making a small change on any that it could.
+
+110
+00:10:09,000 --> 00:10:17,000
+And recording which ones it had been able to compromise so that someone potentially then actually do something more malicious later on.
+
+111
+00:10:17,000 --> 00:10:22,000
+It's like a trespass so who on first entry just messes with the position of objects on your desk a little.
+
+112
+00:10:22,000 --> 00:10:27,000
+Stealing nothing but noting the properties of potential future target.
+
+113
+00:10:27,000 --> 00:10:29,000
+The next finding was more reassuring.
+
+114
+00:10:29,000 --> 00:10:34,000
+None of the script files of the WordPress system itself were anything but themselves.
+
+115
+00:10:34,000 --> 00:10:36,000
+No hidden secrets.
+
+116
+00:10:36,000 --> 00:10:38,000
+They all matched exactly their checksum.
+
+117
+00:10:38,000 --> 00:10:41,000
+An episode I was recently listening to.
+
+118
+00:10:41,000 --> 00:10:44,000
+HPR 4677 by Varns.
+
+119
+00:10:44,000 --> 00:10:47,000
+Talked about what checksums and hashes are.
+
+120
+00:10:47,000 --> 00:10:49,000
+And they certainly helped in this case.
+
+121
+00:10:49,000 --> 00:10:54,000
+Another post-defining was that all the plugins and themes were as they should be.
+
+122
+00:10:54,000 --> 00:10:56,000
+No rogue ones had been added.
+
+123
+00:10:56,000 --> 00:10:59,000
+Also the.ht access file.
+
+124
+00:10:59,000 --> 00:11:02,000
+Often used for redirecting traffic was untouched.
+
+125
+00:11:02,000 --> 00:11:05,000
+Then something a little worrying.
+
+126
+00:11:05,000 --> 00:11:07,000
+A list into I realized what it was.
+
+127
+00:11:07,000 --> 00:11:09,000
+There were two scripts.
+
+128
+00:11:09,000 --> 00:11:13,000
+One for listing the files and one for downloading the contents of any file.
+
+129
+00:11:13,000 --> 00:11:15,000
+And this sounds quite bad.
+
+130
+00:11:15,000 --> 00:11:21,000
+After all it made hackers had probably got sensitive info such as database passwords and someone.
+
+131
+00:11:21,000 --> 00:11:23,000
+But then I realized.
+
+132
+00:11:23,000 --> 00:11:27,000
+These scripts were ones I put there myself the last time I migrated the site.
+
+133
+00:11:27,000 --> 00:11:29,000
+I just hadn't removed them.
+
+134
+00:11:29,000 --> 00:11:30,000
+At least I had.
+
+135
+00:11:30,000 --> 00:11:34,000
+But I forgot that they had included themselves in their own backup.
+
+136
+00:11:34,000 --> 00:11:38,000
+And so got restored along with the rest of the site after it was migrated.
+
+137
+00:11:38,000 --> 00:11:41,000
+Thankfully security by obscurity.
+
+138
+00:11:41,000 --> 00:11:43,000
+The worst kind of security.
+
+139
+00:11:43,000 --> 00:11:45,000
+Had been no one knew about these scripts.
+
+140
+00:11:45,000 --> 00:11:48,000
+They had not been exploited.
+
+141
+00:11:48,000 --> 00:11:52,000
+I made a note to remove them as soon as my investigation was complete.
+
+142
+00:11:52,000 --> 00:11:56,000
+There's just one other rogueish looking page piece grip lurking in there.
+
+143
+00:11:56,000 --> 00:12:00,000
+This was quickly identified to be a left over from some word press installer.
+
+144
+00:12:00,000 --> 00:12:03,000
+And in and of itself it was harmless.
+
+145
+00:12:03,000 --> 00:12:08,000
+Notably the mitigation script that patched the vulnerability was noted to be present.
+
+146
+00:12:08,000 --> 00:12:10,000
+So my investigation was over.
+
+147
+00:12:10,000 --> 00:12:14,000
+It was not necessary to use a sledgehammer where screw driver sufficed.
+
+148
+00:12:14,000 --> 00:12:18,000
+The charity did not have to lose a week and a half of day trend tree.
+
+149
+00:12:18,000 --> 00:12:20,000
+And the run-up to an important event.
+
+150
+00:12:20,000 --> 00:12:24,000
+So hopefully the website will be there providing use of information.
+
+151
+00:12:24,000 --> 00:12:26,000
+And the run-up to the big fair next month.
+
+152
+00:12:26,000 --> 00:12:30,000
+I wrapped things up while changing my administrative password just in case.
+
+153
+00:12:31,000 --> 00:12:33,000
+And it froze the manch of the charity.
+
+154
+00:12:33,000 --> 00:12:36,000
+It was the only other administrators to do the same.
+
+155
+00:12:36,000 --> 00:12:38,000
+Given though that theory this has wrapped up the issue.
+
+156
+00:12:38,000 --> 00:12:42,000
+It would be sensible to continue to monitor things fairly closely for a while.
+
+157
+00:12:42,000 --> 00:12:44,000
+Just in case something was missed.
+
+158
+00:12:44,000 --> 00:12:46,000
+I thought that was that perhaps.
+
+159
+00:12:46,000 --> 00:12:50,000
+At the next day another community group that organised an annual lavender pick had
+
+160
+00:12:50,000 --> 00:12:52,000
+the same warning from the same provider.
+
+161
+00:12:52,000 --> 00:12:57,000
+Given the harvest when ahead of this last weekend, the website was now far low.
+
+162
+00:12:57,000 --> 00:13:01,000
+So they decided to take the easier way and just let the provider roll back.
+
+163
+00:13:01,000 --> 00:13:03,000
+Then their site could be re-patched.
+
+164
+00:13:03,000 --> 00:13:06,000
+And finally password's changed just to be thorough.
+
+165
+00:13:06,000 --> 00:13:09,000
+Hopefully an exploit is pervasive as WP2 shell.
+
+166
+00:13:09,000 --> 00:13:11,000
+Something that comes along only rarely.
+
+167
+00:13:11,000 --> 00:13:16,000
+But with AI large language models being used to both create exploits in defend against them.
+
+168
+00:13:16,000 --> 00:13:17,000
+Who knows?
+
+169
+00:13:17,000 --> 00:13:23,000
+The provider hosting both the sites are mentioned by no means unique in having this instant effect.
+
+170
+00:13:23,000 --> 00:13:25,000
+It was a worldwide event.
+
+171
+00:13:25,000 --> 00:13:30,000
+And there was once in practically no defined users providing an easy roll back was
+
+172
+00:13:30,000 --> 00:13:31,000
+Lordable.
+
+173
+00:13:31,000 --> 00:13:34,000
+Finally enough I had been noticing unusual wordpress style probes.
+
+174
+00:13:34,000 --> 00:13:37,000
+And the logs of some of myself hosted static sites.
+
+175
+00:13:37,000 --> 00:13:41,000
+They did not even run a wordpress in the run up to this happening.
+
+176
+00:13:41,000 --> 00:13:44,000
+And I shrugged it off with random internet noise.
+
+177
+00:13:44,000 --> 00:13:47,000
+But I don't know if that activity was related to this.
+
+178
+00:13:47,000 --> 00:13:51,000
+In terms of security in general, the fence and depth at various levels
+
+179
+00:13:52,000 --> 00:13:56,000
+Not assuming anyone barriers foolproof is probably the best approach.
+
+180
+00:13:56,000 --> 00:14:00,000
+Especially if risk and potential impact of the breaches high.
+
+181
+00:14:00,000 --> 00:14:06,000
+I think web application firewalls can help to some extent to mitigate some attacks like this.
+
+182
+00:14:06,000 --> 00:14:11,000
+And I've dabbled with these back in the days when I had my own virtual private server.
+
+183
+00:14:11,000 --> 00:14:16,000
+Having a clean backup and monitoring for suspicious activity adjusters important
+
+184
+00:14:16,000 --> 00:14:19,000
+as applying the constant stream of security patches,
+
+185
+00:14:19,000 --> 00:14:22,000
+though most every significant software product nowadays needs.
+
+186
+00:14:22,000 --> 00:14:27,000
+Anyway, all of security the story never ends for now is upside-dust.
+
+187
+00:14:27,000 --> 00:14:29,000
+Thanks for listening.
+
+188
+00:14:28,000 --> 00:14:33,560
+You have been listening to the Hacker Public Radio podcast, at hackerpublicradio.org.
+
+189
+00:14:33,960 --> 00:14:37,600
+Today's show was contributed by a HPR listener like yourself.
+
+190
+00:14:37,600 --> 00:14:44,800
+If you ever thought of recording a podcast, then visit the HPR site to find out how easy it really is.
+
+191
+00:14:45,240 --> 00:14:56,360
+Hosting for HPR has been kindly provided by anhonesthost.com, the Internet Archive, rsync.net, and the HPR Community Content Delivery Network.
+
+192
+00:14:56,360 --> 00:15:06,680
+Unless otherwise stated, today's show is released under a Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license.
+

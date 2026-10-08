@@ -1,8 +1,8 @@
 {
   "id": "/ui/",
-  "name": "Podfetch",
-  "short_name": "Podfetch",
-  "description": "Open source podcast manager and player.",
+  "name": "Podsift",
+  "short_name": "Podsift",
+  "description": "Self-hosted podcasts with transcripts, briefs and cuts.",
   "start_url": "/ui/",
   "scope": "/ui/",
   "display": "standalone",

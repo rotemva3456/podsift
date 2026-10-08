@@ -1,0 +1,25 @@
+/* Settings → Podcast app feeds. Uses the tokens from listen.css. */
+.feed-settings{display:grid;gap:16px;max-width:640px}
+.feed-settings h2{font-size:18px;font-weight:600;letter-spacing:-.35px}
+.feed-muted,.feed-hint{color:var(--muted-foreground);font-size:13px;line-height:1.6}
+.feed-hint{font-size:12px}
+.feed-bad{color:var(--destructive)}
+.feed-state{display:flex;flex-direction:column;align-items:flex-start;gap:10px;font-size:13px}
+.feed-status{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.5;color:var(--muted-foreground)}
+.feed-status[data-on]{color:var(--foreground)}
+.feed-status[data-on] svg{color:#16a34a}
+.feed-status svg{flex:none;margin-top:2px}
+.feed-error{font-size:13px;line-height:1.6;color:var(--destructive)}
+.feed-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.feed-actions button{height:38px;padding:0 16px}
+.feed-card{display:grid;gap:10px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;max-width:360px}
+.feed-card-label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.feed-qr{width:160px;height:160px}
+.feed-qr svg{display:block;width:100%;height:100%}
+.feed-row{display:flex;gap:8px}
+.feed-link{flex:1;min-width:0;height:34px;padding:0 10px;font-size:12px;font-family:monospace;
+  background:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:6px}
+.feed-field{display:flex;flex-direction:column;gap:6px;min-width:0;max-width:360px}
+.feed-field>label{font-size:12px;font-weight:500;color:var(--muted-foreground)}
+.feed-field select{height:38px;padding:0 10px;font-size:14px;background:var(--background);color:var(--foreground);
+  border:1px solid var(--border);border-radius:6px}

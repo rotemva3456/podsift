@@ -1,0 +1,110 @@
+# Install with one command:  docker compose up -d   then open http://127.0.0.1:8080/ui/
+# Settings: copy .env.example to .env (optional). All data lives in ./data.
+# Upgrade, backup and restore: docker/README.md.
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: "3"
+
+services:
+  # The only published port: one address for PodFetch and the companion.
+  caddy:
+    image: caddy:2.11-alpine
+    ports:
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8080}:80"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - podfetch
+      - companion
+    healthcheck:
+      # Caddy's admin API, which listens inside the container only.
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:2019/config/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    logging: *logging
+
+  # PodFetch (official image, pinned) with our UI build: docker/app.Dockerfile.
+  podfetch:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    # PodFetch reads its settings from .env (see .env.example). Settings not in .env stay unset.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Fixed here: Caddy and ./data depend on them.
+      PORT: "8000"
+      DATABASE_URL: sqlite:///app/db/podcast.db
+      SUB_DIRECTORY: ""
+      # The companion's AI key is not PodFetch's business.
+      LLM_API_KEY: ""
+      # Native transcript skipping replaces external SponsorBlock API/data.
+      SPONSORBLOCK_API_URL: http://127.0.0.1:9
+    volumes:
+      - ./data/podfetch/db:/app/db
+      - ./data/podfetch/podcasts:/app/podcasts
+    healthcheck:
+      # The PodFetch image has no shell or wget; ffprobe is the one HTTP client inside it.
+      test: ["CMD", "/usr/local/bin/ffprobe", "-v", "quiet", "http://127.0.0.1:8000/ui/default.jpg"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    logging: *logging
+
+  # Our Python service behind /companion/*: docker/companion.Dockerfile.
+  companion:
+    build:
+      context: .
+      dockerfile: docker/companion.Dockerfile
+    init: true
+    environment:
+      PODFETCH_BACKEND: http://podfetch:8000
+      # Your own transcripts and the bundled demo pack (scripts/load-demo.sh) live under here.
+      PODCAST_LIBRARY: /data/library
+      # Passed on from .env only when set there.
+      LLM_BASE_URL: "${LLM_BASE_URL:-}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+      LLM_MODEL: "${LLM_MODEL:-}"
+      TRANSCRIPTION_API_BASE_URL: "${TRANSCRIPTION_API_BASE_URL:-}"
+      TRANSCRIPTION_API_KEY: "${TRANSCRIPTION_API_KEY:-}"
+      TRANSCRIPTION_MODEL: "${TRANSCRIPTION_MODEL:-}"
+      COURSE_WATCHER_URL: "${COURSE_WATCHER_URL:-}"
+      COURSE_WATCHER_PUBLIC_URL: "${COURSE_WATCHER_PUBLIC_URL:-}"
+      ALLOW_PRIVATE_FEEDS: "${ALLOW_PRIVATE_FEEDS:-}"
+    volumes:
+      - ./data/companion:/data
+    depends_on:
+      - podfetch
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/companion/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    logging: *logging
+
+  # Optional local AI, off by default. Turn it on with COMPOSE_PROFILES=local-ai in .env and
+  # point LLM_BASE_URL at http://ollama:11434/v1. Not published outside the stack.
+  ollama:
+    image: ollama/ollama:0.34.4
+    profiles: [local-ai]
+    volumes:
+      - ./data/ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    logging: *logging

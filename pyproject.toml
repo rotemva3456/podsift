@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "podsift-engine"
+version = "0.1.0"
+description = "Portable transcript selection and original-audio rendering engine for PodSift"
+requires-python = ">=3.11"
+dependencies = []
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+
+[project.optional-dependencies]
+network = ["httpx>=0.27,<1"]
+
+[tool.setuptools]
+packages = ["companion.engine"]
+include-package-data = false

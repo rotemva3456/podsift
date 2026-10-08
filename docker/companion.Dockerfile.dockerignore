@@ -1,0 +1,9 @@
+# Build context for docker/companion.Dockerfile: only companion/ and its entrypoint.
+# (BuildKit uses this file instead of the root .dockerignore for this Dockerfile.)
+*
+!companion
+!docker/companion-entrypoint.sh
+**/__pycache__
+**/.pytest_cache
+**/*.pyc
+**/*.db

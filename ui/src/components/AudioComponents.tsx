@@ -1,62 +1,32 @@
-import {Activity, useEffect, useState} from 'react'
-import { AudioAmplifier } from '../models/AudioAmplifier'
-import { AudioPlayer } from './AudioPlayer'
-import { DetailedAudioPlayer } from './DetailedAudioPlayer'
-import useAudioPlayer from "../store/AudioPlayerSlice";
-import useCommon from "../store/CommonSlice";
-import {$api} from "../utils/http";
-import {handlePlayofEpisode} from "../utils/PlayHandler";
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
+import {useEffect, useState} from 'react'
+import {AudioAmplifier} from '../models/AudioAmplifier'
+import {AudioPlayer} from './AudioPlayer'
+import {DetailedAudioPlayer} from './DetailedAudioPlayer'
+import useAudioPlayer from '../store/AudioPlayerSlice'
+import useCommon from '../store/CommonSlice'
+import {client} from '../utils/http'
+import {fetchEpisode} from '../utils/listening'
 
 export const AudioComponents = () => {
-    const detailedAudioPodcastOpen = useCommon(state => state.detailedAudioPlayerOpen)
-    const [audioAmplifier,setAudioAmplifier] = useState<AudioAmplifier>()
-    const currentPodcastEpisodeIndex = useAudioPlayer(state=>state.currentPodcastEpisodeIndex)
-    const currentPodcastEpisodes = useCommon(state=>state.selectedEpisodes)
-    const episodeByIdQuery = $api.useMutation('get', '/api/v1/podcasts/episode/{id}')
-    const episodeChapterQuery = $api.useMutation('get', '/api/v1/podcasts/episodes/{id}/chapters')
-
-
-    useEffect(() => {
-        async function loadEpisodeData() {
-            if (!currentPodcastEpisodes[currentPodcastEpisodeIndex!]) {
-                return ;
-            }
-            const currentPodcastEpisode = currentPodcastEpisodes[currentPodcastEpisodeIndex!]!;
-            try {
-                const respForPodcast = await episodeByIdQuery.mutateAsync({
-                    params: { path: { id: currentPodcastEpisode.podcastEpisode.episode_id } }
-                });
-                const chaptersOfEpisode = await episodeChapterQuery.mutateAsync({
-                    params: { path: { id: currentPodcastEpisode.podcastEpisode.id } }
-                });
-
-                const retrievedPodcastEpisode = handlePlayofEpisode(currentPodcastEpisode.podcastEpisode, chaptersOfEpisode ?? [], respForPodcast);
-                if (retrievedPodcastEpisode) {
-                    useAudioPlayer.setState({
-                        loadedPodcastEpisode: retrievedPodcastEpisode
-                    })
-                }
-            } catch (e) {
-                const chaptersOfEpisode = await episodeChapterQuery.mutateAsync({
-                    params: { path: { id: currentPodcastEpisode.podcastEpisode.id } }
-                });
-                const retrievedPodcastEpisode = handlePlayofEpisode(currentPodcastEpisode.podcastEpisode, chaptersOfEpisode ?? [], undefined);
-                if (retrievedPodcastEpisode) {
-                    useAudioPlayer.setState({
-                        loadedPodcastEpisode: retrievedPodcastEpisode
-                    })
-                }
-            }
-        }
-        if (currentPodcastEpisodeIndex != null) {
-            loadEpisodeData()
-        }
-    }, [currentPodcastEpisodeIndex, currentPodcastEpisodes]);
-
-    return (
-        <>
-            <AudioPlayer audioAmplifier={audioAmplifier} setAudioAmplifier={setAudioAmplifier} />
-            <Activity mode={detailedAudioPodcastOpen ? 'visible': 'hidden'}><DetailedAudioPlayer audioAmplifier={audioAmplifier} setAudioAmplifier={setAudioAmplifier} /></Activity>
-        </>
-    )
+    const detailed=useCommon(state=>state.detailedAudioPlayerOpen)
+    const [amplifier,setAmplifier]=useState<AudioAmplifier>()
+    const index=useAudioPlayer(state=>state.currentPodcastEpisodeIndex)
+    const episodes=useCommon(state=>state.selectedEpisodes)
+    useEffect(()=>{
+        const selected=episodes[index ?? -1]?.podcastEpisode
+        if(!selected)return
+        let cancelled=false
+        // This endpoint includes optional history. A never-played episode is valid.
+        void Promise.all([
+            fetchEpisode(selected.episode_id),
+            client.GET('/api/v1/podcasts/episodes/{id}/chapters',{params:{path:{id:selected.id}}}),
+            client.GET('/api/v1/podcasts/{id}',{params:{path:{id:selected.podcast_id}}}),
+        ]).then(([detail,chapters,show])=>{
+            if(cancelled)return
+            useAudioPlayer.setState({loadedPodcastEpisode:{...detail,chapters:chapters.data ?? []},currentPodcast:show.data})
+        }).catch(()=>{if(!cancelled)useAudioPlayer.setState({loadedPodcastEpisode:{podcastEpisode:selected,chapters:[]}})})
+        return()=>{cancelled=true}
+    },[index,episodes])
+    return <><AudioPlayer audioAmplifier={amplifier} setAudioAmplifier={setAmplifier}/>{detailed&&<DetailedAudioPlayer audioAmplifier={amplifier} setAudioAmplifier={setAmplifier}/>}</>
 }

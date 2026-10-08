@@ -1,0 +1,18 @@
+name: podsift-workspace
+services:
+  podfetch:
+    image: samuel19982/podfetch@sha256:b4f0eac9d9d93f5b850e29546277ad3093fa6398e7a112c8a8867c0c9843883d
+    ports:
+      - "127.0.0.1:18080:8000"
+    volumes:
+      - ./runtime/db:/app/db
+      - ./runtime/podcasts:/app/podcasts
+    environment:
+      DATABASE_URL: sqlite:///app/db/podcast.db
+      POLLING_INTERVAL: "1440"
+      BASIC_AUTH: "false"
+      # Local development uses the same independent skip engine as hosting.
+      SPONSORBLOCK_API_URL: http://127.0.0.1:9
+    restart: unless-stopped
+    mem_limit: 768m
+    cpus: 1.0

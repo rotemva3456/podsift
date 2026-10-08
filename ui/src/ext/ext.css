@@ -1,0 +1,34 @@
+/* Layout for the feature slots (see README.md). Uses the tokens from listen.css. */
+.episode-headers{display:grid;gap:16px;margin:-12px 0 32px}
+.learning-layout[data-panel^="tool:"]{display:none}
+.episode-tool{min-width:0}
+@media(min-width:768px){
+  .workspace-tabs[data-tools]{display:flex;gap:8px;margin:0 0 28px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+  .workspace-tabs[data-tools]>:not(.workspace-tab-desktop,[data-tool]){display:none}
+}
+@media(max-width:767px){
+  .workspace-tab-desktop{display:none}
+  .workspace-tabs[data-tools]{gap:4px;overflow-x:auto;scrollbar-width:none}
+  .workspace-tabs[data-tools] button{flex:1 0 auto;padding-left:10px;padding-right:10px}
+  .episode-headers{margin:-8px 0 24px}
+}
+.episode-badges{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;margin-left:8px;vertical-align:middle}
+@media(max-width:767px){.episode-badges{display:flex;margin:6px 0 0}}
+.player-actions{display:flex;align-items:center;gap:4px}
+/* Phone player, 2 rows: row 2 spreads back/forward/speed and every feature
+   player action evenly, so .player-actions must not be its own box - each action button becomes
+   a flex item of .player-controls. Sized here since features are styled through this slot. */
+@media(max-width:767px){.player-actions{display:contents}.player-actions button{min-width:44px;min-height:44px}}
+.listen-mobile-nav:has(>a:nth-child(5)) a{padding-left:10px;padding-right:10px}
+.listen-mobile-nav:has(>a:nth-child(7)){justify-content:flex-start;overflow-x:auto}
+.make-transcript{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
+.make-transcript p{font-size:13px;line-height:1.6;max-width:420px}
+.make-transcript code{font-size:12px;background:var(--muted);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+/* Feature sections at the top of Listen now (homeSection). */
+.home-sections{display:grid;gap:16px;margin:0 0 28px}
+.home-sections:empty{display:none}
+/* A nav link's count (navLinks[].badge). */
+.nav-count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 6px;border-radius:9px;background:var(--primary);color:var(--primary-foreground);font-size:11px;font-weight:600;line-height:1}
+.listen-sidebar nav a .nav-count{margin-left:auto}
+.listen-mobile-nav a{position:relative}
+.listen-mobile-nav a .nav-count{position:absolute;top:2px;right:calc(50% - 22px);min-width:16px;height:16px;padding:0 4px;font-size:10px}

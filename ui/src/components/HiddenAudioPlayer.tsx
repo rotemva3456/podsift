@@ -1,15 +1,31 @@
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
 import {FC, useEffect} from 'react'
 import useOnMount from '../hooks/useOnMount'
 import useAudioPlayer from '../store/AudioPlayerSlice'
 import { AudioAmplifier } from '../models/AudioAmplifier'
 import { $api } from '../utils/http'
-import {getAudioPlayer} from "../utils/audioPlayer";
+import {getAudioPlayer, watchSkips} from "../utils/audioPlayer";
 import useCommon from "../store/CommonSlice";
 import {SKIPPED_TIME} from "../utils/Utilities";
 import {usePlaybackLogger} from "../hooks/usePlaybackLogger";
+import {fetchEpisode, playEpisode} from "../utils/listening";
+import type {SkipPlan} from "../store/AudioPlayerSlice";
 
 type HiddenAudioPlayerProps = {
     setAudioAmplifier: (audioAmplifier: AudioAmplifier | undefined) => void
+}
+
+/** Smart Play across episodes: play the next plan's episode from its first kept start. */
+async function playNextPlan(plan: SkipPlan) {
+    const stillNext = () => useAudioPlayer.getState().skipPlan === plan
+    try {
+        const {podcastEpisode} = await fetchEpisode(plan.episodeId)
+        if (!stillNext()) return
+        if (!podcastEpisode.status) throw new Error('The next episode is not downloaded.')
+        await playEpisode(podcastEpisode, plan.keep[0]?.[0] ?? 0)
+    } catch {
+        if (stillNext()) useAudioPlayer.getState().stopSmartPlay('next-failed')
+    }
 }
 
 export const HiddenAudioPlayer: FC<HiddenAudioPlayerProps> = ({ setAudioAmplifier }) => {
@@ -53,6 +69,28 @@ export const HiddenAudioPlayer: FC<HiddenAudioPlayerProps> = ({ setAudioAmplifie
         }
         audioPlayer.volume = Math.min(1, Math.max(0, volume / 100))
     }, [volume])
+
+    // Smart Play and sponsor skipping. A plan belongs to one episode: playing another one ends it.
+    useEffect(() => {
+        const audioPlayer = getAudioPlayer()
+        if (!audioPlayer) {
+            return
+        }
+        const stopWatching = watchSkips(audioPlayer, plan => void playNextPlan(plan))
+        const unsubscribe = useAudioPlayer.subscribe((state, previous) => {
+            const id = state.loadedPodcastEpisode?.podcastEpisode.episode_id
+            if (id !== previous.loadedPodcastEpisode?.podcastEpisode.episode_id) {
+                useAudioPlayer.setState({skipReplay: null, skipNotice: null})
+            }
+            if (id !== previous.loadedPodcastEpisode?.podcastEpisode.episode_id && state.skipPlan && state.skipPlan.episodeId !== id) {
+                state.stopSmartPlay()
+            }
+        })
+        return () => {
+            stopWatching()
+            unsubscribe()
+        }
+    }, [])
 
     useEffect(() => {
         if (!('mediaSession' in navigator)) {
@@ -189,6 +227,7 @@ export const HiddenAudioPlayer: FC<HiddenAudioPlayerProps> = ({ setAudioAmplifie
         }
 
         const updateMetadata = (el: HTMLMediaElement) => {
+            if(useAudioPlayer.getState().pendingSeek !== undefined) return
             const duration = normalizeDuration(el.duration)
             const percentage = duration > 0 ? (el.currentTime / duration) * 100 : 0
             setMetadata({
@@ -199,6 +238,7 @@ export const HiddenAudioPlayer: FC<HiddenAudioPlayerProps> = ({ setAudioAmplifie
         }
 
         const onTimeUpdate = (e: Event) => {
+            if(useAudioPlayer.getState().pendingSeek !== undefined) return
             const el = e.currentTarget as HTMLMediaElement
             if (!useAudioPlayer.getState().metadata) {
                 updateMetadata(el)

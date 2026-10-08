@@ -1,3 +1,4 @@
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
 import {defineConfig, PluginOption} from 'vite'
 import react from '@vitejs/plugin-react'
 import {Browser} from "happy-dom";
@@ -6,6 +7,10 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// scripts/dev.sh sets these, so several copies can run side by side.
+const PODFETCH = process.env.PODFETCH_BACKEND || 'http://127.0.0.1:18080'
+const COMPANION = `http://127.0.0.1:${process.env.COMPANION_PORT || 18081}`
+const UI_PORT = Number(process.env.UI_PORT || 5189)
 
 const ReactCompilerConfig = {
 
@@ -23,7 +28,7 @@ function chartingLibrary(): PluginOption {
       // `0.0.0.0` or `true`; the browser reaches it via `localhost`.
       const port = ctx.server?.config?.server?.port ?? 5173
       const host = `localhost:${port}`
-      const resp = await fetch('http://localhost:8000/ui/index.html', {
+      const resp = await fetch(`${PODFETCH}/ui/index.html`, {
         headers: {
           'x-forwarded-host': host,
           'x-forwarded-proto': 'http',
@@ -63,7 +68,7 @@ function forwardRequestOrigin(proxyReq: any, req: IncomingMessage) {
 
 function createBackendProxy(ws = false) {
   return {
-    target: 'http://127.0.0.1:8000',
+    target: PODFETCH,
     changeOrigin: true,
     secure: false,
     ws,
@@ -101,10 +106,28 @@ export default defineConfig(({command}) => ({
     // Default 500 kB is conservative for an SPA with ~30 routes. Our
     // entry chunk is ~528 kB / 165 kB gzipped which is healthy.
     chunkSizeWarningLimit: 700,
+    // One stylesheet, named index-*.css: PodFetch rewrites index.html and links only the first
+    // assets/index*.css (crates/podfetch-web/src/startup.rs, resolve_index_assets). Split CSS
+    // (the feature registry's) would never load in the installed app.
+    cssCodeSplit: false,
+    rolldownOptions: {
+      output: {
+        assetFileNames: asset => asset.names.includes('style.css')
+          ? 'assets/index-[hash][extname]' : 'assets/[name]-[hash][extname]',
+      },
+    },
+  },
+  preview: {
+    host: '127.0.0.1',
+    port: UI_PORT,
+    strictPort: true,
   },
   server:{
-      host: '0.0.0.0',
+      host: '127.0.0.1',
+      port: UI_PORT,
+      strictPort: true,
     proxy:{
+      '/companion': {target: COMPANION},
       '/api': createBackendProxy(),
       '/socket.io': createBackendProxy(true),
       '/podcasts': createBackendProxy(),

@@ -1,0 +1,41 @@
+/* The /search page. Uses the tokens and the episode-row classes from listen.css. */
+.search-form{display:flex;gap:10px;margin:0 0 30px;max-width:720px}
+.search-box{position:relative;flex:1;min-width:0}
+.search-box>svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted-foreground);pointer-events:none}
+.search-box input{height:44px;padding-left:38px;background:var(--card);font-size:14px}
+.search-form>button{height:44px;padding:0 20px}
+.search-summary{font-size:13px;color:var(--muted-foreground);margin:-10px 0 26px}
+.search-section{margin-bottom:40px}
+.search-section>h2{font-size:18px;font-weight:600;letter-spacing:-.35px}
+.search-more{margin-top:16px}
+.search-group{display:grid;grid-template-columns:66px minmax(0,1fr);column-gap:17px;padding:22px 0;border-bottom:1px solid var(--border)}
+.search-group>.episode-cover{grid-row:span 3}
+.search-group-head{min-width:0}
+.search-group h3{font-size:15px;line-height:1.45;font-weight:600;letter-spacing:-.15px}
+.search-hits{display:grid;gap:14px;margin-top:14px;min-width:0}
+.search-hit{display:grid;grid-template-columns:48px minmax(0,1fr) auto;column-gap:12px;align-items:baseline}
+.search-time{font-size:11px;color:var(--primary);font-variant-numeric:tabular-nums;white-space:nowrap}
+.search-hit>p{font-size:14px;line-height:1.75;overflow-wrap:anywhere}
+.search-hit mark{background:color-mix(in srgb,var(--primary) 18%,transparent);color:inherit;border-radius:3px;padding:0 2px}
+.search-hit-actions{display:flex;gap:2px;margin-right:-8px}
+.search-group-foot{grid-column:2;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:8px}
+.search-group-foot>button{padding-left:0;padding-right:0}
+.search-note-link{font-size:12px;color:var(--muted-foreground);text-decoration:underline;text-underline-offset:3px}
+.search-none,.search-note{font-size:13px;color:var(--muted-foreground);margin-top:14px}
+.search-hint{font-size:13px;color:var(--muted-foreground);margin-top:4px}
+.search-problem{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:var(--destructive);margin:12px 0}
+.search-problem>button{padding:0;height:auto}
+.search-group-foot>.search-problem{margin:0;flex-basis:100%}
+@media(max-width:1100px){
+  .search-hit{grid-template-columns:48px minmax(0,1fr)}
+  .search-hit-actions{grid-column:2;flex-wrap:wrap;margin:2px 0 0 -10px}
+}
+@media(max-width:767px){
+  .search-form{gap:8px}
+  .search-box input{font-size:16px}
+  .search-form>button{padding:0 14px}
+  .search-group{grid-template-columns:52px minmax(0,1fr);column-gap:12px;padding:18px 0}
+  .search-group>.episode-cover{grid-row:auto}
+  .search-hits,.search-group-foot{grid-column:1/-1}
+  .search-hit{grid-template-columns:40px minmax(0,1fr)}
+}

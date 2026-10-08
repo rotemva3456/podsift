@@ -1,0 +1,799 @@
+{
+ "hpr2639": {
+  "model": "openai/gpt-oss-20b",
+  "body": {
+   "summary": "The episode explains Bash's four main test types—single brackets, arithmetic, double brackets, and functions/commands—detailing syntax rules, quoting rules, and how they evaluate. It covers how return status works, how to preserve and interpret `$?`, and the side‑effects of echoing it. Listeners get a concise reference for writing robust Bash conditional logic.",
+   "verdict": "READ",
+   "verdict_reason": "Provides clear reference for Bash test syntax and exit status handling, best captured in written form.",
+   "who_for": "Script writers and Bash beginners who need a concise reference and refresher on conditional testing and exit status handling.",
+   "chapters": [
+    {
+     "title": "Introduction & Overview",
+     "start": 0.0
+    },
+    {
+     "title": "Single Brackets & Test Command",
+     "start": 193.3
+    },
+    {
+     "title": "Shell Arithmetic Tests",
+     "start": 394.988
+    },
+    {
+     "title": "Double Brackets Extended Test",
+     "start": 796.077
+    },
+    {
+     "title": "Functions & External Commands as Tests",
+     "start": 966.157
+    },
+    {
+     "title": "Return Status and $?",
+     "start": 1225.866
+    },
+    {
+     "title": "Preserving Exit Status",
+     "start": 1313.805
+    },
+    {
+     "title": "Echo Side Effects",
+     "start": 1346.265
+    },
+    {
+     "title": "Podcast Wrap-up",
+     "start": 1386.205
+    }
+   ],
+   "key_ideas": [
+    {
+     "text": "Bash offers four main test types: single brackets/test, arithmetic, double brackets, and functions/commands.",
+     "citations": [
+      {
+       "segment_id": "seg-0030",
+       "start": 185.74,
+       "end": 190.32
+      },
+      {
+       "segment_id": "seg-0031",
+       "start": 190.64,
+       "end": 192.96
+      },
+      {
+       "segment_id": "seg-0032",
+       "start": 193.3,
+       "end": 198.3
+      },
+      {
+       "segment_id": "seg-0038",
+       "start": 222.34,
+       "end": 227.3
+      }
+     ]
+    },
+    {
+     "text": "Single square brackets and test are built-in commands that require spaces around the expression; omitting spaces causes a “[ command not found” error.",
+     "citations": [
+      {
+       "segment_id": "seg-0041",
+       "start": 242.36,
+       "end": 247.1
+      },
+      {
+       "segment_id": "seg-0049",
+       "start": 274.88,
+       "end": 278.8
+      },
+      {
+       "segment_id": "seg-0056",
+       "start": 325.52,
+       "end": 328.52
+      }
+     ]
+    },
+    {
+     "text": "Arithmetic expressions inside $(( )) evaluate to numbers; a non‑zero result is true (exit status 0) and zero is false (non‑zero exit status).",
+     "citations": [
+      {
+       "segment_id": "seg-0068",
+       "start": 394.988,
+       "end": 400.708
+      },
+      {
+       "segment_id": "seg-0073",
+       "start": 431.408,
+       "end": 438.328
+      },
+      {
+       "segment_id": "seg-0084",
+       "start": 507.348,
+       "end": 517.508
+      },
+      {
+       "segment_id": "seg-0085",
+       "start": 517.508,
+       "end": 525.688
+      }
+     ]
+    },
+    {
+     "text": "Double brackets ( [[ ]]) provide an extended test where word splitting and pathname expansion are disabled, so empty variables need not be quoted.",
+     "citations": [
+      {
+       "segment_id": "seg-0127",
+       "start": 796.077,
+       "end": 803.097
+      },
+      {
+       "segment_id": "seg-0137",
+       "start": 869.857,
+       "end": 877.137
+      },
+      {
+       "segment_id": "seg-0145",
+       "start": 931.497,
+       "end": 938.757
+      },
+      {
+       "segment_id": "seg-0148",
+       "start": 949.717,
+       "end": 954.837
+      }
+     ]
+    },
+    {
+     "text": "External commands like grep can be used inside if statements; the command’s exit status (0 for success) determines the truth of the condition.",
+     "citations": [
+      {
+       "segment_id": "seg-0158",
+       "start": 1013.537,
+       "end": 1016.977
+      },
+      {
+       "segment_id": "seg-0168",
+       "start": 1058.757,
+       "end": 1060.477
+      },
+      {
+       "segment_id": "seg-0176",
+       "start": 1093.345,
+       "end": 1100.466
+      },
+      {
+       "segment_id": "seg-0178",
+       "start": 1108.966,
+       "end": 1116.505
+      }
+     ]
+    },
+    {
+     "text": "The special variable $? holds the return status of the last command; zero indicates success (true).",
+     "citations": [
+      {
+       "segment_id": "seg-0209",
+       "start": 1249.025,
+       "end": 1255.986
+      },
+      {
+       "segment_id": "seg-0212",
+       "start": 1271.645,
+       "end": 1274.025
+      },
+      {
+       "segment_id": "seg-0215",
+       "start": 1281.105,
+       "end": 1286.966
+      }
+     ]
+    },
+    {
+     "text": "Storing the exit status in a variable before running another command keeps the original value",
+     "citations": [
+      {
+       "segment_id": "seg-0220",
+       "start": 1313.805,
+       "end": 1323.085
+      }
+     ]
+    },
+    {
+     "text": "Echoing $?, even just to display it, overwrites the previous exit status",
+     "citations": [
+      {
+       "segment_id": "seg-0224",
+       "start": 1346.265,
+       "end": 1352.265
+      },
+      {
+       "segment_id": "seg-0226",
+       "start": 1358.685,
+       "end": 1365.845
+      }
+     ]
+    }
+   ],
+   "percent_new": null,
+   "new_concepts": [],
+   "heard_count": null,
+   "ads_seconds": 4,
+   "duration": 1433.4,
+   "input_chars": 28773,
+   "calls": 3,
+   "parts": 2,
+   "repaired": false
+  }
+ },
+ "hpr2649": {
+  "model": "openai/gpt-oss-20b",
+  "body": {
+   "summary": "This episode continues the Bash tips series, covering looping constructs, conditional logic, command lists, and advanced error handling techniques like exiting with status codes and early file checks. Dave Morris explains syntax and provides practical examples, emphasizing readability and best practices for Bash scripting. It offers both conceptual guidance and actionable patterns for beginners and intermediate users.",
+   "verdict": "HEAR",
+   "verdict_reason": "Detailed explanation of Bash control flow, error handling, and best‑practice patterns",
+   "who_for": "Bash scripting beginners and intermediate users looking to strengthen control flow and error handling",
+   "chapters": [
+    {
+     "title": "Intro and Overview",
+     "start": 0.0
+    },
+    {
+     "title": "Loop Constructs: while and until",
+     "start": 181.28
+    },
+    {
+     "title": "Conditional Constructs: if and case",
+     "start": 463.731
+    },
+    {
+     "title": "Command Lists: AND and OR",
+     "start": 988.823
+    },
+    {
+     "title": "Exiting with Status",
+     "start": 1250.934
+    },
+    {
+     "title": "Early File Existence Check",
+     "start": 1274.974
+    },
+    {
+     "title": "Grouped Commands After Condition",
+     "start": 1296.014
+    },
+    {
+     "title": "Alternative Syntax & Readability",
+     "start": 1342.194
+    }
+   ],
+   "key_ideas": [
+    {
+     "text": "While loop syntax: while test; do commands; done, loop continues while test is true.",
+     "citations": [
+      {
+       "segment_id": "seg-0032",
+       "start": 217.18,
+       "end": 218.98
+      },
+      {
+       "segment_id": "seg-0033",
+       "start": 219.32,
+       "end": 223.74
+      },
+      {
+       "segment_id": "seg-0034",
+       "start": 224.2,
+       "end": 229.78
+      },
+      {
+       "segment_id": "seg-0035",
+       "start": 229.88,
+       "end": 232.54
+      },
+      {
+       "segment_id": "seg-0036",
+       "start": 232.92,
+       "end": 236.86
+      }
+     ]
+    },
+    {
+     "text": "Until loop example that prints numbers 0‑4 by decrementing a counter until a condition is met.",
+     "citations": [
+      {
+       "segment_id": "seg-0045",
+       "start": 259.56,
+       "end": 261.46
+      },
+      {
+       "segment_id": "seg-0054",
+       "start": 293.5,
+       "end": 300.5
+      },
+      {
+       "segment_id": "seg-0055",
+       "start": 300.5,
+       "end": 303.28
+      },
+      {
+       "segment_id": "seg-0056",
+       "start": 303.52,
+       "end": 306.98
+      },
+      {
+       "segment_id": "seg-0057",
+       "start": 307.48,
+       "end": 313.62
+      }
+     ]
+    },
+    {
+     "text": "If/elif/else syntax and optional branches explained, showing test commands followed by then, else, and optional elif.",
+     "citations": [
+      {
+       "segment_id": "seg-0094",
+       "start": 487.211,
+       "end": 490.191
+      },
+      {
+       "segment_id": "seg-0095",
+       "start": 490.311,
+       "end": 494.411
+      },
+      {
+       "segment_id": "seg-0096",
+       "start": 494.411,
+       "end": 500.711
+      },
+      {
+       "segment_id": "seg-0097",
+       "start": 500.871,
+       "end": 504.731
+      },
+      {
+       "segment_id": "seg-0098",
+       "start": 504.731,
+       "end": 509.091
+      }
+     ]
+    },
+    {
+     "text": "Case statement syntax: case word in pattern) commands;; ... esac, with pattern matching, multiple patterns, and clause terminators like ;;, &;, &&;.",
+     "citations": [
+      {
+       "segment_id": "seg-0118",
+       "start": 579.011,
+       "end": 585.691
+      },
+      {
+       "segment_id": "seg-0119",
+       "start": 585.691,
+       "end": 590.691
+      },
+      {
+       "segment_id": "seg-0120",
+       "start": 591.051,
+       "end": 599.131
+      },
+      {
+       "segment_id": "seg-0121",
+       "start": 599.491,
+       "end": 602.711
+      },
+      {
+       "segment_id": "seg-0122",
+       "start": 602.711,
+       "end": 609.711
+      }
+     ]
+    },
+    {
+     "text": "Command list separators: semicolons for line breaks, && for logical AND, || for logical OR, with short‑circuit behavior explained.",
+     "citations": [
+      {
+       "segment_id": "seg-0200",
+       "start": 1031.443,
+       "end": 1034.743
+      },
+      {
+       "segment_id": "seg-0201",
+       "start": 1035.283,
+       "end": 1038.283
+      },
+      {
+       "segment_id": "seg-0202",
+       "start": 1038.283,
+       "end": 1042.443
+      },
+      {
+       "segment_id": "seg-0203",
+       "start": 1042.443,
+       "end": 1044.283
+      },
+      {
+       "segment_id": "seg-0204",
+       "start": 1044.283,
+       "end": 1045.963
+      }
+     ]
+    },
+    {
+     "text": "A Bash script can exit with a specific status using the exit command, e.g., exit 1 to signal failure.",
+     "citations": [
+      {
+       "segment_id": "seg-0243",
+       "start": 1250.934,
+       "end": 1261.514
+      },
+      {
+       "segment_id": "seg-0244",
+       "start": 1261.534,
+       "end": 1266.454
+      },
+      {
+       "segment_id": "seg-0245",
+       "start": 1266.834,
+       "end": 1272.974
+      }
+     ]
+    },
+    {
+     "text": "Checking for a required file early in a script and aborting if it's missing prevents further errors.",
+     "citations": [
+      {
+       "segment_id": "seg-0247",
+       "start": 1274.974,
+       "end": 1277.994
+      },
+      {
+       "segment_id": "seg-0248",
+       "start": 1278.294,
+       "end": 1283.514
+      },
+      {
+       "segment_id": "seg-0249",
+       "start": 1283.634,
+       "end": 1285.794
+      },
+      {
+       "segment_id": "seg-0250",
+       "start": 1286.254,
+       "end": 1290.334
+      },
+      {
+       "segment_id": "seg-0251",
+       "start": 1290.334,
+       "end": 1296.014
+      }
+     ]
+    },
+    {
+     "text": "Multiple commands can be grouped in braces after a condition to provide an error message before exiting.",
+     "citations": [
+      {
+       "segment_id": "seg-0252",
+       "start": 1296.014,
+       "end": 1302.954
+      },
+      {
+       "segment_id": "seg-0253",
+       "start": 1302.954,
+       "end": 1312.094
+      },
+      {
+       "segment_id": "seg-0254",
+       "start": 1312.094,
+       "end": 1319.674
+      },
+      {
+       "segment_id": "seg-0255",
+       "start": 1319.674,
+       "end": 1329.554
+      },
+      {
+       "segment_id": "seg-0256",
+       "start": 1329.754,
+       "end": 1336.114
+      }
+     ]
+    },
+    {
+     "text": "The test command (e.g., test -e filename) can replace the [ ] syntax and still work with braces.",
+     "citations": [
+      {
+       "segment_id": "seg-0259",
+       "start": 1342.194,
+       "end": 1347.354
+      },
+      {
+       "segment_id": "seg-0260",
+       "start": 1347.354,
+       "end": 1360.334
+      },
+      {
+       "segment_id": "seg-0261",
+       "start": 1360.794,
+       "end": 1365.134
+      },
+      {
+       "segment_id": "seg-0262",
+       "start": 1365.534,
+       "end": 1368.174
+      },
+      {
+       "segment_id": "seg-0263",
+       "start": 1368.494,
+       "end": 1373.454
+      }
+     ]
+    },
+    {
+     "text": "Using grep -q with a logical AND can test for a pattern and echo a success message, serving as a concise conditional.",
+     "citations": [
+      {
+       "segment_id": "seg-0267",
+       "start": 1391.494,
+       "end": 1400.754
+      },
+      {
+       "segment_id": "seg-0268",
+       "start": 1401.314,
+       "end": 1405.254
+      },
+      {
+       "segment_id": "seg-0269",
+       "start": 1405.254,
+       "end": 1410.494
+      },
+      {
+       "segment_id": "seg-0270",
+       "start": 1410.954,
+       "end": 1414.774
+      }
+     ]
+    },
+    {
+     "text": "An if statement is often clearer than terse logical operators when writing Bash scripts.",
+     "citations": [
+      {
+       "segment_id": "seg-0271",
+       "start": 1415.034,
+       "end": 1417.554
+      },
+      {
+       "segment_id": "seg-0272",
+       "start": 1417.954,
+       "end": 1423.214
+      },
+      {
+       "segment_id": "seg-0273",
+       "start": 1423.214,
+       "end": 1431.794
+      },
+      {
+       "segment_id": "seg-0274",
+       "start": 1431.994,
+       "end": 1434.214
+      }
+     ]
+    }
+   ],
+   "percent_new": null,
+   "new_concepts": [],
+   "heard_count": null,
+   "ads_seconds": 4,
+   "duration": 1500.9,
+   "input_chars": 31235,
+   "calls": 3,
+   "parts": 2,
+   "repaired": false
+  }
+ },
+ "hpr2659": {
+  "model": "openai/gpt-oss-20b",
+  "body": {
+   "summary": "The episode explores Bash’s conditional expressions, detailing unary and binary operators, logical combinations, and practical examples. It then dives into string pattern matching, covering globbing, extended globs, and handling ShellCheck warnings. Listeners learn how to write robust test conditions and powerful pattern-based scripts.",
+   "verdict": "READ",
+   "verdict_reason": "contains concrete pattern syntax, code examples, and ShellCheck guidance that are easier to read.",
+   "who_for": "Intermediate Bash users looking to deepen their understanding of test operators, logical expressions, and pattern matching.",
+   "chapters": [
+    {
+     "title": "Introduction & Recap",
+     "start": 0.0
+    },
+    {
+     "title": "Conditional Expressions Basics",
+     "start": 114.82
+    },
+    {
+     "title": "Unary File & Variable Operators",
+     "start": 348.98
+    },
+    {
+     "title": "Binary Operators & Comparisons",
+     "start": 581.975
+    },
+    {
+     "title": "Logical Combination & Precedence",
+     "start": 671.795
+    },
+    {
+     "title": "Example Scripts & String Comparison Patterns",
+     "start": 800.015
+    },
+    {
+     "title": "Basic Glob Pattern for Bear (incl. intro)",
+     "start": 1259.331
+    },
+    {
+     "title": "Extended Glob + Title Matching",
+     "start": 1360.111
+    },
+    {
+     "title": "Extended Glob @ Name Lists",
+     "start": 1469.606
+    },
+    {
+     "title": "Variable Pattern Matching",
+     "start": 1571.326
+    },
+    {
+     "title": "ShellCheck SC2053 Handling",
+     "start": 1704.006
+    },
+    {
+     "title": "Wrap‑up and Next Steps",
+     "start": 1756.166
+    }
+   ],
+   "key_ideas": [
+    {
+     "text": "Bash conditional expressions include unary file checks and binary string/numeric comparisons.",
+     "citations": [
+      {
+       "segment_id": "seg-0033",
+       "start": 192.9,
+       "end": 198.6
+      },
+      {
+       "segment_id": "seg-0044",
+       "start": 238.82,
+       "end": 239.64
+      }
+     ]
+    },
+    {
+     "text": "Unary file operators like -e, -d, -h, -s allow status checks; -v and -z test variable/string length.",
+     "citations": [
+      {
+       "segment_id": "seg-0071",
+       "start": 348.98,
+       "end": 354.68
+      },
+      {
+       "segment_id": "seg-0106",
+       "start": 516.475,
+       "end": 521.315
+      }
+     ]
+    },
+    {
+     "text": "Binary operators cover string equality, lexicographic and arithmetic comparisons such as -eq, -ne.",
+     "citations": [
+      {
+       "segment_id": "seg-0117",
+       "start": 583.895,
+       "end": 585.935
+      },
+      {
+       "segment_id": "seg-0131",
+       "start": 650.515,
+       "end": 656.795
+      }
+     ]
+    },
+    {
+     "text": "Logical operators (!, &&, ||, parentheses) control precedence and combine tests, short‑circuiting.",
+     "citations": [
+      {
+       "segment_id": "seg-0135",
+       "start": 671.795,
+       "end": 676.215
+      },
+      {
+       "segment_id": "seg-0152",
+       "start": 771.415,
+       "end": 776.275
+      }
+     ]
+    },
+    {
+     "text": "Simple glob patterns (* bear) match strings ending with \"bear\".",
+     "citations": [
+      {
+       "segment_id": "seg-0251",
+       "start": 1290.551,
+       "end": 1298.591
+      },
+      {
+       "segment_id": "seg-0252",
+       "start": 1298.591,
+       "end": 1305.171
+      },
+      {
+       "segment_id": "seg-0256",
+       "start": 1329.731,
+       "end": 1336.971
+      }
+     ]
+    },
+    {
+     "text": "Extended glob with + and a character class matches alphanumeric/space/hyphen for titles like \"Further Ancillary Bash Tips – 11\".",
+     "citations": [
+      {
+       "segment_id": "seg-0260",
+       "start": 1360.111,
+       "end": 1366.711
+      },
+      {
+       "segment_id": "seg-0262",
+       "start": 1384.506,
+       "end": 1392.146
+      },
+      {
+       "segment_id": "seg-0272",
+       "start": 1461.086,
+       "end": 1469.606
+      }
+     ]
+    },
+    {
+     "text": "Extended glob with @ and a pattern list matches specific names (dog, pig, cat).",
+     "citations": [
+      {
+       "segment_id": "seg-0273",
+       "start": 1469.606,
+       "end": 1477.966
+      },
+      {
+       "segment_id": "seg-0274",
+       "start": 1477.966,
+       "end": 1484.326
+      },
+      {
+       "segment_id": "seg-0281",
+       "start": 1528.786,
+       "end": 1538.066
+      }
+     ]
+    },
+    {
+     "text": "ShellCheck SC2053 warns about unquoted pattern variables; can be silenced with a comment.",
+     "citations": [
+      {
+       "segment_id": "seg-0306",
+       "start": 1704.006,
+       "end": 1721.766
+      },
+      {
+       "segment_id": "seg-0308",
+       "start": 1728.686,
+       "end": 1733.666
+      },
+      {
+       "segment_id": "seg-0314",
+       "start": 1750.126,
+       "end": 1753.906
+      }
+     ]
+    }
+   ],
+   "percent_new": null,
+   "new_concepts": [],
+   "heard_count": null,
+   "ads_seconds": 4,
+   "duration": 1831.4,
+   "input_chars": 36077,
+   "calls": 3,
+   "parts": 2,
+   "repaired": false
+  }
+ }
+}

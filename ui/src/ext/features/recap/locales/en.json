@@ -1,0 +1,46 @@
+{
+  "tool": "Recap",
+  "nav-recap": "Recap",
+  "title": "Recap",
+  "loading": "Loading your recap…",
+  "load-error": "The recap couldn't load.",
+  "try-again": "Try again",
+  "empty": "Nothing to recap yet. Listen to some of this episode first.",
+
+  "heard-all": "You've heard the whole thing ({{percent}}%).",
+  "heard-some": "You've heard {{position}} of {{total}}.",
+  "not-heard": "Not heard yet.",
+
+  "key-ideas": "Key ideas",
+  "highlights": "Highlights",
+  "notes": "Notes",
+  "play-from": "Play from {{time}}: {{title}}",
+
+  "learned-title": "What you learned",
+  "learned-no-transcript": "A recap needs a transcript of this episode.",
+  "learned-no-ai": "Connect AI to add a short paragraph about what you learned.",
+  "connect-ai": "Settings → AI",
+  "learned-generating": "Writing your recap… This can take a few seconds.",
+  "learned-failed": "That couldn't be made. {{reason}}",
+  "learned-generate": "What did I learn?",
+  "regenerate": "Write it again",
+
+  "save-last": "Save the last {{seconds}} seconds",
+  "no-transcript-title": "No transcript yet for this episode",
+  "no-quote": "No transcript yet for that part of the episode.",
+  "saved": "Highlight saved.",
+  "save-error": "Couldn't save that highlight. Try again.",
+
+  "home-card": "This week: {{episodes}}, {{highlights}}",
+
+  "week-title": "This week",
+  "week-intro": "What you heard, the ideas that stuck, and the parts you kept.",
+  "week-error": "This week's recap couldn't load.",
+  "week-empty-title": "Nothing to recap yet",
+  "week-empty": "Finish an episode this week, and it will show up here.",
+  "week-summary": "{{episodes}} · {{minutes}} · {{highlights}}",
+  "episodes": "Episodes",
+  "copy-markdown": "Copy as Markdown",
+  "copied": "Copied",
+  "download-md": "Download .md"
+}

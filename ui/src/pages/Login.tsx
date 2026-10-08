@@ -12,6 +12,8 @@ import { OIDCButton } from '../components/OIDCButton'
 import { Mic } from 'lucide-react'
 import {$api} from "../utils/http";
 import {setAuth, setLogin} from "../utils/login";
+import {HostedLogin, HostedModeUnavailable} from '../ext/features/hosted-auth/HostedLogin'
+import {getRuntimeMode} from '../ext/features/hosted-auth/session'
 
 export type LoginData = {
     username: string,
@@ -19,6 +21,13 @@ export type LoginData = {
     rememberMe: boolean
 }
 export const Login = () => {
+    const mode = getRuntimeMode()
+    if (mode === 'hosted') return <HostedLogin />
+    if (mode === 'unavailable') return <HostedModeUnavailable />
+    return <SelfHostedLogin />
+}
+
+const SelfHostedLogin = () => {
     const configModel = $api.useQuery('get', '/api/v1/sys/config')
     const loginMutation = $api.useMutation('post', '/api/v1/login')
     const navigate = useNavigate()

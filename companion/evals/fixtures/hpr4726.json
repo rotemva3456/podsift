@@ -1,0 +1,37 @@
+{
+  "episode_id": "hpr4726",
+  "title": "Trurl's intro show",
+  "show": "Hacker Public Radio",
+  "attribution": "\"Trurl's intro show\" by Trurl, Hacker Public Radio (https://hackerpublicradio.org/), licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). See ATTRIBUTION.md.",
+  "transcript": {"format": "srt", "path": "companion/evals/fixtures/hpr4726.srt"},
+  "label": {
+    "verdict": "SKIP",
+    "verdict_reason": "A personal-interests conversation (maths, chess, literature, politics) with no operational or reference content — casual chat, not something to look up or learn from.",
+    "chapters": [
+      {"segment_index": 48, "title": "Main interests: mathematics, philosophy and academia"},
+      {"segment_index": 221, "title": "Chess ranking systems and top-player psychology"},
+      {"segment_index": 346, "title": "Politics: from socialism to libertarianism, and cryptocurrency"}
+    ],
+    "key_ideas": [
+      {"text": "His strongest, most abiding interest is mathematics, studied at university and later taught as a private tutor, alongside a long-standing interest in philosophy and politics.",
+       "segment_indices": [48, 49, 50, 53, 54, 55]},
+      {"text": "Socrates' idea that knowledge is identified with skill was a strong early influence: you only really understand a problem once you have actually worked on it, not just looked at it from afar.",
+       "segment_indices": [143, 148, 150, 156]},
+      {"text": "He researched chess ranking systems and found that the very top players are under-rated by the system — they are further ahead of the field than their ratings suggest — partly because draws become common at the very top.",
+       "segment_indices": [221, 224, 236, 240, 247]},
+      {"text": "Nabokov's novel \"The Luzhin Defense\", about a chess prodigy's breakdown, comes up as capturing the psychological toll of chess obsession.",
+       "segment_indices": [284, 289, 301]},
+      {"text": "Edgar Allan Poe's precision of language was what first got him interested in literature, and taught him that precise expression of an idea matters, not just a loose gesture at it.",
+       "segment_indices": [303, 304, 316, 321]},
+      {"text": "Raised a socialist, he has drifted toward libertarianism as UK left politics radicalised over the last decade, and separately got interested in cryptocurrency and the Lightning network.",
+       "segment_indices": [345, 346, 350, 388]}
+    ],
+    "cut_request": {
+      "want": "chess ranking systems and what he discovered about top players",
+      "skip": "his personal background, philosophy studies, and politics",
+      "minutes": 4,
+      "must_keep_segment_indices": [221, 224, 236, 240, 247],
+      "never_keep_segment_indices": [32, 34, 150, 346, 350]
+    }
+  }
+}

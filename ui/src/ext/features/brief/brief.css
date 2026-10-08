@@ -1,0 +1,62 @@
+/* Episode brief: the header panel, the row chip and /briefs. Tokens come from listen.css. */
+.brief-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px 16px;display:grid;gap:12px;min-width:0}
+.brief-label{display:flex;align-items:center;gap:6px;color:var(--primary);font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+.brief-verdict{display:flex;align-items:baseline;gap:10px;font-size:15px;font-weight:600;line-height:1.45;letter-spacing:-.15px}
+.brief-summary{font-size:14px;line-height:1.75;max-width:820px}
+.brief-facts{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:12px;color:var(--muted-foreground)}
+.brief-facts strong{color:var(--foreground);font-weight:600}
+.brief-who,.brief-concepts{font-size:12px;line-height:1.6;color:var(--muted-foreground)}
+.brief-concepts>span{color:var(--foreground);font-weight:600}
+.brief-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:10px 32px;margin-top:2px}
+.brief-columns h3{font-size:12px;font-weight:600;margin-bottom:4px}
+.brief-list{display:grid;gap:1px}
+.brief-list li{display:flex;align-items:baseline;gap:6px;font-size:13px;line-height:1.55;min-width:0}
+.brief-list li>span{min-width:0;overflow-wrap:anywhere}
+.brief-time{flex-shrink:0;min-width:64px;justify-content:flex-start;padding:0 6px;height:24px;font-size:11px;color:var(--muted-foreground);font-variant-numeric:tabular-nums}
+.brief-time:hover,.brief-time:focus-visible{color:var(--primary)}
+.brief-toggle{justify-self:start;padding:0;height:auto}
+.brief-actions,.brief-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;font-size:12px}
+.brief-meta{color:var(--muted-foreground);border-top:1px solid var(--border);padding-top:10px}
+.brief-meta>button{padding:0;height:auto;font-size:12px}
+.brief-link{color:var(--primary);font-size:12px}
+.brief-link:hover{text-decoration:underline}
+.brief-muted{font-size:12px;line-height:1.6;color:var(--muted-foreground)}
+.brief-muted a{color:var(--primary)}
+.brief-busy{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted-foreground)}
+.brief-error{font-size:12px;line-height:1.6;color:var(--destructive)}
+.brief-transcript{border-top:1px solid var(--border);padding-top:6px}
+.brief-transcript>p{font-size:13px;color:var(--muted-foreground);text-align:center;margin-top:6px}
+.brief-transcript .make-transcript{margin-top:8px}
+
+.brief-chip{display:inline-flex;align-items:center;flex-shrink:0;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700;letter-spacing:.9px;line-height:1.5;text-transform:uppercase}
+.brief-chip-small{font-size:9.5px;padding:1px 7px;letter-spacing:.7px}
+.brief-hear{background:var(--accent);color:var(--primary)}
+.brief-read{background:#E4ECF7;color:#2A5690}
+.brief-skip{background:var(--secondary);color:var(--muted-foreground)}
+:root.dark .brief-read{background:#1F2B3C;color:#A8C3EA}
+:root.dark .brief-hear{background:#173229;color:var(--primary)}
+
+.brief-lead{margin:-12px 0 20px}
+.brief-shows{display:grid;grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:22px}
+.brief-show-name{font-size:18px;font-weight:600;letter-spacing:-.35px;margin:-8px 0 14px}
+.brief-notice{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;margin-bottom:14px}
+.brief-notice a{color:var(--primary)}
+.brief-queue-bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 0;background:var(--background);border-bottom:1px solid var(--border)}
+.brief-progress-wrap{flex:1;min-width:200px;display:grid;gap:6px;font-size:13px}
+.brief-progress{height:6px;border-radius:999px;background:var(--secondary);overflow:hidden}
+.brief-progress>span{display:block;height:100%;background:var(--primary);transition:width .3s}
+.brief-estimate{display:grid;gap:8px;margin:14px 0 4px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:var(--card);font-size:13px;line-height:1.6}
+.brief-queue-list{margin-top:4px}
+.brief-queue-row{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--border)}
+.brief-queue-pick{display:flex;align-items:center;gap:14px;flex:1;min-width:0;cursor:pointer}
+.brief-queue-copy{display:grid;gap:2px;min-width:0}
+.brief-queue-title{font-size:14px;font-weight:600;line-height:1.45;overflow-wrap:anywhere}
+.brief-queue-state{flex-shrink:0}
+.brief-queue-state a{display:inline-flex}
+
+@media(max-width:767px){
+  .brief-panel{padding:14px 16px 12px;gap:10px}
+  .brief-verdict{font-size:14px}
+  .brief-columns{grid-template-columns:1fr}
+  .brief-shows{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
+}

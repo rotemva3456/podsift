@@ -1,0 +1,9 @@
+{
+  "nav": "Demo feature",
+  "nav-short": "Demo",
+  "nav-desk": "Demo desk",
+  "tool": "Demo tool",
+  "settings": "Demo settings",
+  "header": "Demo header for {{id}} at {{position}}",
+  "tool-button": "Jump to 0:42"
+}

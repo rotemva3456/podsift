@@ -1,3 +1,5 @@
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
+import {ListenSession} from '../components/ListenSession'
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import App from '../App'
@@ -23,7 +25,8 @@ export const Root = () => {
 
     return (
         <App>
-            <div className="grid grid-cols-[1fr] md:grid-cols-[18rem_1fr] grid-rows-[1fr_auto]">
+            <a className="skip-link" href="#main-content">Skip to content</a>
+            <div className="listen-shell">
                 <Sidebar />
                 <MainContentPanel>
                     <Header />
@@ -32,6 +35,7 @@ export const Root = () => {
                     </div>
                 </MainContentPanel>
                 <AudioComponents />
+                <ListenSession/>
                 <EpisodeSearchModal />
             </div>
         </App>

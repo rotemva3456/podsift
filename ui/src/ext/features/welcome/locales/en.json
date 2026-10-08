@@ -1,0 +1,17 @@
+{
+    "title": "Welcome",
+    "subtitle": "Three quick steps, then it's yours.",
+    "step-1-title": "Add a show",
+    "step-1-body": "Search a directory, or paste an RSS feed.",
+    "step-1-cta": "Add podcast",
+    "step-2-title": "Connect AI (optional)",
+    "step-2-body": "Paste your own key for briefs, cuts by topic and Ask.",
+    "step-2-connected": "Connected: {{provider}}.",
+    "step-2-cta": "Connect AI",
+    "step-3-title": "Pick your topics",
+    "step-3-body": "3-10 words. Briefs weigh them when judging what's worth hearing.",
+    "topics-placeholder": "e.g. Bash, home labs",
+    "topics-input-label": "Add a topic",
+    "add-topic": "Add",
+    "remove-topic": "Remove {{topic}}"
+}

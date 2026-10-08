@@ -1,0 +1,19 @@
+{
+  "make-transcript": "Make a transcript",
+  "make-transcript-hint": "Made from the episode's audio. This takes a few minutes.",
+  "make-transcript-starting": "Starting…",
+  "make-transcript-downloading": "Downloading the episode first…",
+  "make-transcript-making": "Making the transcript… You can keep listening.",
+  "make-transcript-slow": "The transcript still isn't ready after 30 minutes. It may still be in progress.",
+  "make-transcript-check": "Check again",
+  "make-transcript-ready": "The transcript is ready.",
+  "make-transcript-show": "Show the transcript",
+  "make-transcript-off": "Transcription is off. Set <code>TRANSCRIPTION_API_BASE_URL</code> and <code>TRANSCRIPTION_API_KEY</code> in <code>.env</code> (free with a Groq key), then restart the app.",
+  "make-transcript-not-allowed": "Only an admin can make transcripts. Ask the person who runs this server.",
+  "make-transcript-failed": "The transcript couldn't be made: {{reason}}",
+  "make-transcript-too-large": "Long episodes can be bigger than the transcription service accepts.",
+  "make-transcript-missing": "Transcription finished without a transcript. Try again.",
+  "make-transcript-error": "The transcript couldn't be started. Check your connection and try again.",
+  "make-transcript-download-error": "The episode didn't finish downloading. Try again.",
+  "try-again": "Try again"
+}

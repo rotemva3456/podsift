@@ -1,0 +1,36 @@
+Podsift
+Copyright 2026 Podsift contributors
+
+This product includes software from PodFetch (https://github.com/SamTV12345/PodFetch),
+copyright SamTV12345 and PodFetch contributors, licensed under the Apache License,
+Version 2.0 (see LICENSE). PodFetch's own README, as imported, is kept at
+README.upstream.md. Source commit: 88ff1dfb96a7c8e85bdfab9f66f07c1a82d256bc (see
+UPSTREAM.md for the exact provenance, including the pinned backend image digest).
+
+Podsift is not affiliated with, endorsed by, or sponsored by Spotify.
+
+## What changed from PodFetch, and what Podsift added
+
+CHANGES.md has the full list. In short: the Rust backend (`crates/`, `src/`,
+`migrations/`) is unchanged and runs from the official pinned image. The bundled React
+UI (`ui/`) keeps PodFetch's listening, subscription and playlist code, changed for
+navigation, the player, settings and build tooling. Everything else — the transcript
+workspace, briefs, cuts, Smart Play, flashcards, voice notes, private feeds, the "Worth
+hearing" digest, and the companion service and MCP server that provide them — is new
+code written for Podsift.
+
+## Third-party components carried in the built images
+
+- FFmpeg (the companion image copies the static build from the official PodFetch image),
+  licensed GPL-3.0. See https://ffmpeg.org/legal.html.
+- The bundled demo pack (`demo/`) is Hacker Public Radio content, CC BY-SA 4.0 per
+  episode; see `demo/LICENSE-CONTENT.md` for attribution and per-episode licence checks.
+
+Every other dependency is pulled from its own package registry at build time under its
+own license (see `Cargo.lock`, `ui/pnpm-lock.yaml`, `companion/requirements.txt`,
+`mcp/pyproject.toml`); none of their source is vendored into this repository.
+
+Sponsor skipping uses Podsift's own transcript-derived detector, without SponsorBlock
+API or database data. The imported Apache-2.0 PodFetch source retains its optional
+SponsorBlock client and preference storage. Podsift's player does not read those
+third-party timings, and the shipped image/Compose defaults disable external lookups.

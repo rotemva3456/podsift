@@ -87,6 +87,6 @@ following variables:
 
 # User Creation
 
-You can create an admin, user, or uploader either through [CLI](docs/CLI.md) or via invites.
+You can create an admin, user, or uploader either through [CLI](CLI.md) or via invites.
 
 To generate an invite, log into Podfetch → Top Right Icon → User Administration → Invites

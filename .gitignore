@@ -1,3 +1,4 @@
+# Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
 target
 *.db
 .idea
@@ -22,3 +23,20 @@ settings.local.json
 .e2e-run/
 ui/playwright-report/
 ui/test-results/
+
+# Personal state and generated local artifacts for this workspace.
+runtime/
+# Everything the docker compose install stores (compose.yaml): databases, episodes, companion data.
+/data/
+# Keep the settings template in git, even where a broader rule ignores .env* files.
+!.env.example
+# Screenshots and check reports written by the verify-*.cjs scripts.
+evidence/
+ui/node_modules/
+ui/dist/
+companion/__pycache__/
+companion/.pytest_cache/
+.venv/
+
+__pycache__/
+.pytest_cache/

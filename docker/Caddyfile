@@ -1,0 +1,39 @@
+# One address for the whole app: /companion/* goes to the companion, everything else to
+# PodFetch. Plain HTTP inside the stack; for HTTPS, put your own reverse proxy in front
+# (docker/README.md).
+{
+	servers {
+		# Keep X-Forwarded-Host and -Proto from a reverse proxy on a private network, so that
+		# PodFetch builds https:// audio and image links when the app is served over HTTPS.
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	# Caddy passes request headers on unchanged, including Authorization and Cookie (logins),
+	# and adds X-Forwarded-For, -Proto and -Host. PodFetch builds its audio and image links from
+	# X-Forwarded-Host and -Proto (url_rewriting::resolve_server_url_from_headers).
+	# Audio types are not compressed, so Range requests for audio work as before.
+	encode zstd gzip
+
+	@companion path /companion /companion/*
+	handle @companion {
+		reverse_proxy companion:8000
+	}
+
+	# A phone's "Install app" / "Add to Home Screen" reads whatever /manifest.json returns.
+	# PodFetch's own backend always serves that path itself (crates/podfetch-web/src/startup.rs
+	# transform_index_files -> manifest_json_location; get_manifest_router in manifest_controller.rs),
+	# hard-codes name/short_name to "PodFetch", and cannot be reconfigured or overridden by env var.
+	# ui/public/manifest.webmanifest (this app's own renamed manifest) is never linked to by the
+	# HTML PodFetch actually serves at /ui/, so answer it here first, before the podfetch handle below.
+	@manifest path /manifest.json
+	handle @manifest {
+		header Content-Type "application/manifest+json"
+		respond `{"id":"/ui/","name":"Podsift","short_name":"Podsift","description":"Self-hosted podcasts with transcripts, briefs and cuts.","start_url":"/ui/","scope":"/ui/","display":"standalone","orientation":"portrait-primary","theme_color":"#101010","background_color":"#101010","icons":[{"src":"/ui/pwa-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/ui/pwa-512x512.png","sizes":"512x512","type":"image/png"},{"src":"/ui/pwa-512x512.png","sizes":"512x512","type":"image/png","purpose":"maskable any"}]}` 200
+	}
+
+	handle {
+		reverse_proxy podfetch:8000
+	}
+}

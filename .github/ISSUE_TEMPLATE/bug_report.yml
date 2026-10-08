@@ -1,0 +1,48 @@
+name: Bug report
+description: Something doesn't work the way it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Please **do not include API keys, tokens, or your
+        BASIC_AUTH password** anywhere below, including in logs — paste logs through a
+        find-and-replace first if a key ever appeared in one.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The image tag or commit you're running (`docker compose images`, or the tag you deployed).
+    validations:
+      required: true
+  - type: dropdown
+    id: install-type
+    attributes:
+      label: Install type
+      options:
+        - docker compose (default)
+        - docker compose with local Ollama profile
+        - Built from source
+        - Other (describe below)
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: |
+        `docker compose logs podfetch companion` (or the specific service). Trim to the
+        relevant lines, and double-check no key or password is in them before pasting.
+      render: shell
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Browser/OS if this is a UI issue, whether login is on, which AI provider is configured (not the key).

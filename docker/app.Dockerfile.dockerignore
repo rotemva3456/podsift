@@ -1,0 +1,10 @@
+# Build context for docker/app.Dockerfile: only ui/, without installed or built files.
+# (BuildKit uses this file instead of the root .dockerignore for this Dockerfile.)
+*
+!ui
+ui/node_modules
+ui/dist
+ui/dev-dist
+ui/test-results
+ui/playwright-report
+ui/**/*.local

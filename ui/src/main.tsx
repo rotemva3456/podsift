@@ -1,3 +1,4 @@
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
 import "./utils/navigationUtils"
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -9,6 +10,7 @@ import { router } from './App'
 import i18n from './language/i18n'
 import '@fontsource-variable/geist'
 import './index.css'
+import './listen.css'
 import {$api} from "./utils/http";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {setAuth, setLogin} from "./utils/login";
@@ -16,13 +18,16 @@ import {getConfigFromHtmlFile} from "./utils/config";
 import {queryClient} from "./utils/socketio";
 import {registerPwaServiceWorker} from "./utils/pwa";
 import {applyThemeToDOM} from "./utils/theme";
+import {acceptAccount, detectRuntimeMode, hostedProfile, setRuntimeMode} from './ext/features/hosted-auth/session'
 
 const config = getConfigFromHtmlFile()
+const runtimeMode = await detectRuntimeMode()
+setRuntimeMode(runtimeMode)
 applyThemeToDOM()
 registerPwaServiceWorker()
 
 
-if (config) {
+if (config && runtimeMode !== 'hosted') {
     const postUrl = window.location.origin + import.meta.env.BASE_URL + "login"
     if (!window.location.pathname.endsWith('login') && !window.location.pathname.includes('/invite/')) {
         setLogin({
@@ -149,7 +154,19 @@ if (config) {
 
 
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+let render = true
+if (runtimeMode === 'hosted' && !window.location.pathname.endsWith('/login')) {
+    try {
+        acceptAccount((await hostedProfile()).username, queryClient)
+    } catch (error) {
+        const status = (error as {status?: number}).status
+        const reason = status === 403 ? 'invitation' : status === 401 ? 'expired' : 'unavailable'
+        window.location.replace(`${import.meta.env.BASE_URL}login?reason=${reason}`)
+        render = false
+    }
+}
+
+if (render) ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
         <I18nextProvider i18n={i18n}>

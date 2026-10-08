@@ -1,0 +1,34 @@
+/* Flashcards, "replay what I forget" and exports. Tokens come from listen.css. */
+.review-page{display:grid;gap:22px;max-width:640px}
+.review-muted{font-size:13px;line-height:1.6;color:var(--muted-foreground)}
+.review-error{font-size:12px;line-height:1.6;color:var(--destructive)}
+.review-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:12px}
+.review-state{display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 20px;text-align:center;font-size:13px;line-height:1.6;color:var(--muted-foreground);border:1px dashed var(--border);border-radius:10px}
+.review-state h3{font-size:16px;font-weight:600;color:var(--foreground)}
+
+.review-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;display:grid;gap:12px}
+.review-episode{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted-foreground)}
+.review-question{font-size:16px;font-weight:600;line-height:1.5}
+.review-answer{font-size:14px;line-height:1.7;border-top:1px solid var(--border);padding-top:10px}
+.review-grades{display:flex;flex-wrap:wrap;gap:8px}
+
+.review-transcript{border-top:1px solid var(--border);padding-top:6px;text-align:center}
+.review-transcript>p{font-size:13px;color:var(--muted-foreground);margin-bottom:8px}
+.review-cards{display:grid;gap:12px}
+.review-card-list{display:grid;gap:10px}
+.review-card-list li{border-bottom:1px solid var(--border);padding-bottom:10px}
+.review-q{font-size:13px;font-weight:600}
+.review-a{font-size:13px;color:var(--muted-foreground);margin-top:2px}
+
+.review-replay,.review-export{border-top:1px solid var(--border);padding-top:16px}
+.review-replay h2,.review-export h2{font-size:14px;font-weight:600;margin-bottom:4px}
+.review-replay-plan{margin-top:10px;display:grid;gap:8px}
+.review-replay-actions,.review-smart{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.review-export-actions{display:flex;flex-wrap:wrap;gap:24px;margin-top:10px}
+.review-export-actions>div{display:grid;gap:6px;max-width:260px}
+.review-export-ready{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+
+@media(max-width:767px){
+  .review-page{padding-bottom:24px}
+  .review-card{padding:14px 16px}
+}

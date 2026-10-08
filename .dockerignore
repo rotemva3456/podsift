@@ -1,1 +1,13 @@
-node_modules
+# For builds that use this file, such as upstream PodFetch's Dockerfiles: keep installed
+# packages, local data and secrets out of the build context. Our own images have their own
+# lists next to them: docker/app.Dockerfile.dockerignore, docker/companion.Dockerfile.dockerignore.
+**/node_modules
+ui/dist
+runtime
+data
+evidence
+.env
+.venv
+.git
+**/__pycache__
+**/.pytest_cache

@@ -1,46 +1,62 @@
-import useCommon from '../store/CommonSlice'
-import { useTranslation } from 'react-i18next'
-import { SidebarItem } from './SidebarItem'
-import { Archive, BarChart2, Compass, Heart, Home, Inbox, ListChecks, Menu as MenuIcon, Mic, Podcast, Search, Sparkles, Tag, X } from 'lucide-react'
+// Modified by Podsift contributors, 2026-09-30. See CHANGES.md.
+import {useEffect, useState} from 'react'
+import {BookOpen, Bookmark, ChevronDown, Compass, Headphones, Home, Library, ListMusic, MoreHorizontal, Settings} from 'lucide-react'
+import {useTranslation} from 'react-i18next'
+import {NavLink, useLocation} from 'react-router-dom'
+import {navLinks} from '../ext/registry'
+import {Button} from './ui/button'
+import {Popover, PopoverContent, PopoverTitle, PopoverTrigger} from './ui/popover'
 
-const ICON_SIZE = 18
+const primaryLinks = [
+    {path: '/home/view', label: 'Today', mobileLabel: 'Today', icon: Home},
+    {path: '/podcasts', label: 'Library', mobileLabel: 'Library', icon: Library},
+    {path: '/learn', label: 'Learn', mobileLabel: 'Learn', icon: BookOpen},
+    {path: '/knowledge', label: 'Knowledge', mobileLabel: 'Knowledge', icon: Bookmark},
+]
+
+const absolutePath = (path: string) => `/${path.replace(/^\/+/, '')}`
+const atPath = (current: string, path: string) => current === path || current.startsWith(`${path}/`)
 
 export const Sidebar = () => {
-    const sidebarCollapsed = useCommon(state => state.sidebarCollapsed)
-    const setSidebarCollapsed = useCommon(state => state.setSidebarCollapsed)
-    const { t } = useTranslation()
+    const {t} = useTranslation()
+    const location = useLocation()
+    const features = navLinks.map(link => ({...link, path: absolutePath(link.path), label: t(link.label, {ns: link.featureId})}))
+    const moreLinks = [
+        {path: '/discover', label: 'Find podcasts', icon: Compass, badge: undefined},
+        {path: '/queue', label: 'Listen next', icon: ListMusic, badge: undefined},
+        ...features,
+    ]
+    const moreActive = moreLinks.some(link => atPath(location.pathname, link.path))
+    const [moreOpen, setMoreOpen] = useState(moreActive)
+    const [mobileMoreOpen, setMobileMoreOpen] = useState(false)
 
-    return (
-        <div className={`fixed md:static ui-sidebar-surface h-full px-6 py-8 transition-[left] w-72 z-20 ${sidebarCollapsed ? '-left-72' : 'left-0 ui-sidebar-shadow md:shadow-none'}`} id="primary-navigation" aria-label={t('sidebar-navigation')}>
+    useEffect(() => {if (moreActive) setMoreOpen(true)}, [location.pathname, moreActive])
 
-            {/* Burger menu */}
-            <div className="flex items-center justify-center fixed left-0 md:-left-16 top-0 ui-bg-accent hover:ui-bg-accent-hover cursor-pointer text-white h-16 w-16 rounded-br-lg shadow-[0_4px_16px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_var(--color-mustard-500)] transition-all z-10"
-                 onClick={()=>{setSidebarCollapsed(!sidebarCollapsed)}}>
-                {sidebarCollapsed ? <MenuIcon size={32} /> : <X size={32} />}
-            </div>
-
-            <span className="flex item-center gap-2 mb-10 px-4 py-3 opacity-0 md:opacity-100 transition-opacity">
-                <Mic className="ui-text-accent" size={22} />
-                <span className="font-bold">Podfetch</span>
-            </span>
-
-            <ul className="flex flex-col gap-2">
-                <SidebarItem icon={<Home size={ICON_SIZE} />} path="./home" translationKey="homepage"/>
-                <SidebarItem icon={<Podcast size={ICON_SIZE} />} path="podcasts" translationKey="all-subscriptions"/>
-                <SidebarItem icon={<Compass size={ICON_SIZE} />} path="discover" translationKey="discover"/>
-                <SidebarItem icon={<Heart size={ICON_SIZE} />} path="favorites" translationKey="favorites"/>
-                <SidebarItem icon={<Sparkles size={ICON_SIZE} />} path="timeline" translationKey="timeline"/>
-                <SidebarItem icon={<Inbox size={ICON_SIZE} />} path="inbox" translationKey="inbox" spaceBefore={true}/>
-                <SidebarItem icon={<ListChecks size={ICON_SIZE} />} path="waiting-list" translationKey="waiting-list"/>
-                <SidebarItem icon={<Archive size={ICON_SIZE} />} path="episodes" translationKey="episodes-archive"/>
-                <SidebarItem icon={<BarChart2 size={ICON_SIZE} />} path="stats" translationKey="stats-title"/>
-                <SidebarItem icon={<Tag size={ICON_SIZE} />} path="tags" translationKey="tag_other"/>
-
-                <span className="display-only-mobile">
-                    <SidebarItem icon={<Search size={ICON_SIZE} />} path="/podcasts/search" translationKey="search-episodes"/>
-                </span>
-            </ul>
-
-        </div>
-    )
+    return <>
+        <aside className="listen-sidebar">
+            <NavLink to="/home/view" className="listen-brand"><span><Headphones size={22}/></span>Podsift</NavLink>
+            <nav aria-label="Main navigation">
+                {primaryLinks.map(({path, label, icon: Icon}) => <NavLink key={path} to={path}><Icon size={19}/>{label}</NavLink>)}
+                <Button variant="ghost" className="listen-more-toggle" aria-expanded={moreOpen} onClick={() => setMoreOpen(!moreOpen)}>
+                    <MoreHorizontal size={19}/> More tools <ChevronDown className={moreOpen ? 'more-chevron open' : 'more-chevron'} size={15}/>
+                </Button>
+                {moreOpen && <div className="listen-more-links">
+                    {moreLinks.map(({path, label, icon: Icon, badge: Badge}) => <NavLink key={path} to={path}><Icon size={18}/>{label}{Badge && <Badge/>}</NavLink>)}
+                </div>}
+            </nav>
+            <div className="sidebar-bottom"><NavLink to="/settings"><Settings size={18}/> Settings</NavLink><a href="https://github.com/SamTV12345/PodFetch" target="_blank" rel="noreferrer">Built on PodFetch ↗</a></div>
+        </aside>
+        <nav className="listen-mobile-nav" aria-label="Mobile navigation">
+            {primaryLinks.map(({path, mobileLabel, icon: Icon}) => <NavLink key={path} to={path}><Icon size={20}/><span>{mobileLabel}</span></NavLink>)}
+            <Popover open={mobileMoreOpen} onOpenChange={setMobileMoreOpen}>
+                <PopoverTrigger render={<Button variant="ghost" className={moreActive || atPath(location.pathname, '/settings') ? 'mobile-more-trigger active' : 'mobile-more-trigger'} aria-label="More tools"><MoreHorizontal size={20}/><span>More</span></Button>}/>
+                <PopoverContent side="top" align="end" sideOffset={8} className="mobile-more-popover">
+                    <PopoverTitle className="sr-only">More tools</PopoverTitle>
+                    <nav className="mobile-more-links" aria-label="More navigation">
+                        {[...moreLinks, {path: '/settings', label: 'Settings', icon: Settings, badge: undefined}].map(({path, label, icon: Icon, badge: Badge}) => <NavLink key={path} to={path} onClick={() => setMobileMoreOpen(false)}><Icon size={18}/>{label}{Badge && <Badge/>}</NavLink>)}
+                    </nav>
+                </PopoverContent>
+            </Popover>
+        </nav>
+    </>
 }

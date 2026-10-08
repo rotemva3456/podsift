@@ -1,0 +1,35 @@
+{
+  "episode_id": "hpr2659",
+  "title": "Making decisions in Bash (part 3)",
+  "show": "HPR Bash Tips",
+  "attribution": "\"Making decisions in Bash (part 3)\" by Dave Morriss, Hacker Public Radio (https://hackerpublicradio.org/), licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). See demo/LICENSE-CONTENT.md.",
+  "transcript": {"format": "timed_json", "path": "demo/library/hpr-bash-tips/hpr2659.timed.json"},
+  "label": {
+    "verdict": "READ",
+    "verdict_reason": "A list of test operators and glob-pattern syntax with worked examples; a reference to look up, not reasoning to hear.",
+    "chapters": [
+      {"segment_index": 39, "title": "Unary and binary conditional-expression operators"},
+      {"segment_index": 137, "title": "Combining expressions: NOT, AND, OR"},
+      {"segment_index": 218, "title": "String pattern matching with globs and extended globs"}
+    ],
+    "key_ideas": [
+      {"text": "Useful unary file/string tests: -e (exists), -d (is a directory), -s (exists and is non-empty), -z / -n (string length zero / non-zero).",
+       "segment_indices": [71, 75, 77, 101, 111, 114]},
+      {"text": "[[ ]] compares strings using the current locale's collation order, while test / [ ] use plain ASCII ordering.",
+       "segment_indices": [46, 49, 53]},
+      {"text": "-a and -o combine expressions only inside test / [ ] and do not short-circuit; && and || inside [[ ]] do short-circuit, as covered in the previous episode.",
+       "segment_indices": [145, 148, 150, 153]},
+      {"text": "Inside [[ str == pattern ]] the right-hand side is an unquoted glob pattern, including extended globs like +(...) (one or more) and @(a|b|c) (match any one of a list).",
+       "segment_indices": [222, 226, 235, 251, 262, 278]},
+      {"text": "ShellCheck (warning SC2053) flags an unquoted $pattern as a mistake, but that warning should be ignored when unquoted glob matching is exactly the intended behaviour.",
+       "segment_indices": [306, 307, 314]}
+    ],
+    "cut_request": {
+      "want": "extended glob pattern matching examples, like +() and @()",
+      "skip": "the full list of unary file test operators and locale string comparison",
+      "minutes": 6,
+      "must_keep_segment_indices": [249, 258, 262, 272, 287, 297],
+      "never_keep_segment_indices": [46, 71, 75, 77, 111, 114]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+/* Settings → AI. Uses the tokens from listen.css. */
+.ai-settings{display:grid;gap:20px;max-width:640px}
+.ai-settings h2{font-size:18px;font-weight:600;letter-spacing:-.35px}
+.ai-settings h3{font-size:15px;font-weight:600}
+.ai-muted,.ai-hint{color:var(--muted-foreground);font-size:13px;line-height:1.6}
+.ai-hint{font-size:12px}
+.ai-hint a{color:var(--primary);text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;gap:4px}
+.ai-hint code,.ai-transcription code{font-size:11px;background:var(--muted);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.ai-row{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
+.ai-row button{padding:0;height:auto}
+.ai-bad{color:var(--destructive)}
+.ai-status,.ai-problem,.ai-outcome{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.5}
+.ai-status svg,.ai-problem svg,.ai-outcome svg{flex:none;margin-top:2px}
+.ai-status{color:var(--muted-foreground)}
+.ai-status[data-on]{color:var(--foreground)}
+.ai-status[data-on] svg,.ai-outcome[data-tone=good] svg{color:#16a34a}
+.ai-problem,.ai-outcome[data-tone=bad]{color:var(--destructive)}
+.ai-outcome[data-tone=info]{color:var(--muted-foreground)}
+.ai-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ai-field>label,.ai-providers legend{font-size:12px;font-weight:500;color:var(--muted-foreground)}
+.ai-field input{height:38px;font-size:14px}
+.ai-field .ai-limit{max-width:180px}
+.ai-providers{border:0;padding:0;margin:0;min-width:0;display:grid;gap:8px}
+.ai-providers legend{margin-bottom:8px}
+.ai-providers:disabled{opacity:.6}
+.ai-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ai-chips label{position:relative;display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1px solid var(--border);border-radius:999px;font-size:13px;cursor:pointer;background:var(--card)}
+.ai-chips label[data-checked]{border-color:var(--primary);background:var(--secondary);font-weight:600}
+.ai-chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.ai-chips label:has(input:focus-visible){outline:2px solid var(--ring);outline-offset:2px}
+.ai-providers:disabled .ai-chips label{cursor:not-allowed}
+.ai-actions{display:flex;flex-wrap:wrap;gap:10px}
+.ai-actions button{height:38px;padding:0 18px}
+/* Unavailable but still focusable (aria-disabled), so keyboard focus stays put; the ui button's disabled: styles need :disabled. */
+.ai-button[aria-disabled=true]{opacity:.5;cursor:not-allowed}
+.ai-transcription{display:grid;gap:8px;padding-top:20px;border-top:1px solid var(--border)}
+.ai-state{display:flex;flex-direction:column;align-items:flex-start;gap:10px;font-size:13px}
+.ask-panel .ask-connect a{color:var(--primary);text-decoration:underline;text-underline-offset:3px}

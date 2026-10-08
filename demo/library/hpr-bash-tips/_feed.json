@@ -1,0 +1,45 @@
+{
+  "title": "HPR Bash Tips (Hacker Public Radio)",
+  "feed": "http://companion:8000/companion/demo/feed/hpr-bash-tips.xml",
+  "episodes": [
+    {
+      "key": "hpr2639",
+      "guid": "hpr2639",
+      "n": 9,
+      "title": "Making decisions in Bash (part 1) - HPR2639",
+      "summary": "Dave Morriss starts a 3-part series on how Bash evaluates conditions: test, [ ], [[ ]] and the exit-status rules that decide, if, while and &&/||.",
+      "duration": 1440.434,
+      "published": "2018-09-13",
+      "audio": "https://hub.hackerpublicradio.org/ccdn.php?filename=/eps/hpr2639/hpr2639.mp3",
+      "byte_length": 11524756,
+      "words_file": "hpr2639.txt",
+      "source": "Hacker Public Radio"
+    },
+    {
+      "key": "hpr2649",
+      "guid": "hpr2649",
+      "n": 10,
+      "title": "Making decisions in Bash (part 2) - HPR2649",
+      "summary": "Part 2: comparing strings and numbers in Bash, the pitfalls of unquoted variables in a test, and case statements.",
+      "duration": 1507.725,
+      "published": "2018-09-27",
+      "audio": "https://hub.hackerpublicradio.org/ccdn.php?filename=/eps/hpr2649/hpr2649.mp3",
+      "byte_length": 12063089,
+      "words_file": "hpr2649.txt",
+      "source": "Hacker Public Radio"
+    },
+    {
+      "key": "hpr2659",
+      "guid": "hpr2659",
+      "n": 11,
+      "title": "Making decisions in Bash (part 3) - HPR2659",
+      "summary": "Part 3: combining conditions, testing files, and the arithmetic ((...)) form for numeric comparisons.",
+      "duration": 1838.462,
+      "published": "2018-10-11",
+      "audio": "https://hub.hackerpublicradio.org/ccdn.php?filename=/eps/hpr2659/hpr2659.mp3",
+      "byte_length": 14708982,
+      "words_file": "hpr2659.txt",
+      "source": "Hacker Public Radio"
+    }
+  ]
+}

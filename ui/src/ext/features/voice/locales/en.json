@@ -1,0 +1,16 @@
+{
+  "record-note": "Record a voice note",
+  "stop-recording": "Stop recording",
+  "processing": "Turning speech into text…",
+  "listening": "Listening…",
+  "note-saved": "Voice note saved.",
+  "note-error": "The voice note couldn't be saved. Try again.",
+  "ask-error": "That didn't work. Try again.",
+  "need-speech": "Voice notes need AI speech (Settings → AI) or your browser's speech recognition.",
+  "need-speech-ask": "Asking by voice needs AI speech (Settings → AI) or your browser's speech recognition.",
+  "ask-by-voice": "Ask by voice",
+  "stop-asking": "Stop listening",
+  "speaking": "Reading the answer aloud…",
+  "browser-recognition-label": "Use my browser's speech recognition",
+  "browser-recognition-note": "Faster, and works without an AI key. In Chrome, your voice is sent to Google to recognize it."
+}

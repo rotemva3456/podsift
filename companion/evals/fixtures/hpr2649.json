@@ -1,0 +1,37 @@
+{
+  "episode_id": "hpr2649",
+  "title": "Making decisions in Bash (part 2)",
+  "show": "HPR Bash Tips",
+  "attribution": "\"Making decisions in Bash (part 2)\" by Dave Morriss, Hacker Public Radio (https://hackerpublicradio.org/), licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). See demo/LICENSE-CONTENT.md.",
+  "transcript": {"format": "timed_json", "path": "demo/library/hpr-bash-tips/hpr2649.timed.json"},
+  "label": {
+    "verdict": "READ",
+    "verdict_reason": "Loop, if/case and command-list syntax, with worked examples to look up later, not a story or design trade-off.",
+    "chapters": [
+      {"segment_index": 32, "title": "while and until loops"},
+      {"segment_index": 89, "title": "Conditional constructs: if and case"},
+      {"segment_index": 190, "title": "Command lists: && and ||"}
+    ],
+    "key_ideas": [
+      {"text": "A while loop runs its body while its test is true (exit status 0); an until loop runs while its test is false, stopping once it becomes true.",
+       "segment_indices": [37, 38, 50, 51]},
+      {"text": "if/elif/else tests run in order; case matches a word against a list of glob patterns in order and runs the first clause that matches.",
+       "segment_indices": [94, 100, 118, 126, 142]},
+      {"text": "A case clause normally ends with ;; (no fallthrough); ;& falls through to the next clause unconditionally, and ;;& falls through only if the next pattern also matches.",
+       "segment_indices": [144, 146, 151, 155]},
+      {"text": "if and case both end with their own name spelled backwards: fi and esac.",
+       "segment_indices": [148, 149]},
+      {"text": "command1 && command2 runs command2 only if command1 succeeds; command1 || command2 runs command2 only if command1 fails; both short-circuit and skip command2 when it's not needed.",
+       "segment_indices": [216, 217, 219, 220, 224, 225]},
+      {"text": "A common one-line guard is [ -e \"$file\" ] || { echo \"unable to find $file\"; exit 1; }, which aborts a script early when a file it depends on is missing.",
+       "segment_indices": [238, 239, 242, 255, 260, 262]}
+    ],
+    "cut_request": {
+      "want": "AND/OR command lists, short-circuiting, and the file-exists guard idiom",
+      "skip": "while and until loop syntax, if and case statement syntax",
+      "minutes": 8,
+      "must_keep_segment_indices": [190, 216, 220, 224, 238, 255, 267],
+      "never_keep_segment_indices": [32, 37, 57, 70, 89, 96, 118, 148]
+    }
+  }
+}

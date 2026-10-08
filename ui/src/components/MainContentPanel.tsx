@@ -1,16 +1,3 @@
-import { FC, PropsWithChildren } from 'react'
-import useCommon from '../store/CommonSlice'
-
-export const MainContentPanel: FC<PropsWithChildren> = ({ children }) => {
-    const setSidebarCollapsed = useCommon(state => state.setSidebarCollapsed)
-    const sidebarCollapsed = useCommon(state => state.sidebarCollapsed)
-
-    return (
-        <div className="flex flex-col px-4 xs:px-8 overflow-y-auto pb-28">
-            {/* Scrim for sidebar */}
-            <div className={`fixed inset-0 z-10 ${sidebarCollapsed ? 'hidden' : 'block md:hidden'}`} onClick={() => { setSidebarCollapsed(!sidebarCollapsed) }}></div>
-
-            {children}
-        </div>
-    )
-}
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
+import {PropsWithChildren} from 'react'
+export const MainContentPanel = ({children}:PropsWithChildren) => <main id="main-content" tabIndex={-1} className="listen-main"><div className="listen-content">{children}</div></main>

@@ -1,3 +1,4 @@
+// Modified by Podsift contributors, 2026-09-24: the login header rule is shared (ext/shared/podfetch.ts). See CHANGES.md.
 import createClient, {Middleware} from "openapi-fetch";
 import createTanstackQueryClient from "openapi-react-query";
 import {components, paths} from "../../schema";
@@ -6,6 +7,11 @@ import { enqueueSnackbar } from "@/utils/toast";
 import i18n from "../language/i18n";
 import {getLogin} from "./login";
 import {getConfigFromHtmlFile} from "./config";
+import {authHeader} from "../ext/shared/podfetch";
+import {hostedFetch} from '../ext/features/hosted-auth/session'
+
+// The login header rule, shared with podfetch() and companion(): Basic or Bearer from the stored login.
+export {authHeader}
 
 
 export let apiURL: string
@@ -15,11 +21,12 @@ if (window.location.pathname.startsWith("/ui")) {
 } else {
     //match everything before /ui
     const regex = /\/([^/]+)\/ui\//
-    apiURL = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/" + regex.exec(window.location.href)![1]
+    const prefix = regex.exec(window.location.href)?.[1]
+    apiURL = window.location.origin + (prefix ? "/" + prefix : '')
 }
 uiURL = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/ui"
 
-export const client = createClient<paths>({ baseUrl: apiURL });
+export const client = createClient<paths>({ baseUrl: apiURL, fetch: hostedFetch });
 
 
 export const HEADER_TO_USE: Record<string, string> = {
@@ -40,14 +47,12 @@ function isJsonString(str: string) {
 
 const authMiddleware: Middleware = {
     async onRequest({ request}) {
-        const auth = localStorage.getItem('auth') || sessionStorage.getItem('auth')
         Object.entries(HEADER_TO_USE).forEach(([key, value]) => {
             request.headers.set(key, value)
         })
-        if (auth && configObj && configObj.basicAuth) {
-            request.headers.set('Authorization', 'Basic '+ auth)
-        } else if (auth && configObj && configObj.oidcConfigured) {
-            request.headers.set('Authorization', 'Bearer '+ auth)
+        const authorization = authHeader(configObj)
+        if (authorization) {
+            request.headers.set('Authorization', authorization)
         }
         return request;
     },

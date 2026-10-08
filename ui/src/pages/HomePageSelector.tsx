@@ -1,32 +1,6 @@
-import {useTranslation} from "react-i18next";
-import {Heading1} from "../components/Heading1";
-import {NavLink, Outlet} from "react-router-dom";
-import {Home, ListVideo} from "lucide-react";
-
-export const HomePageSelector = ()=>{
-    const {t} = useTranslation()
-    return (
-        <>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-x-6 gap-y-6 mb-6 xs:mb-10">
-                <Heading1 className="">{t('homepage')}</Heading1>
-
-                {/* Tabs */}
-                <ul className="flex gap-2 border-b lg:border-none ui-border text-sm ui-text-muted w-full lg:w-auto home-page-selector">
-                    <NavLink className={`cursor-pointer inline-block px-2 py-3`} to={"/home/view"}>
-                        <span className="flex items-center gap-2">
-                            <Home size={18} /> {t('homepage')}
-                        </span>
-                    </NavLink>
-                    <NavLink className={`cursor-pointer inline-block px-2 py-3`} to={'/home/playlist'}>
-                        <span className="flex items-center gap-2">
-                            <ListVideo size={18} /> {t('playlists')}
-                        </span>
-                    </NavLink>
-                </ul>
-
-            </div>
-            <Outlet/>
-        </>
-
-    )
-}
+// Modified by Podsift contributors, 2026-09-22; 2026-09-26: feature sections (ui/src/ext). See CHANGES.md.
+import {Outlet} from 'react-router-dom'
+import {homeSections} from '../ext/registry'
+export const HomePageSelector = () => <><div className="page-title"><h1>Today</h1><p>Continue listening, explore the words, or return to an idea.</p></div>
+    {homeSections.length > 0 && <div className="home-sections">{homeSections.map(({featureId, Component}) => <Component key={featureId}/>)}</div>}
+    <Outlet/></>

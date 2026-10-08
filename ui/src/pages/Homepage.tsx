@@ -1,75 +1,34 @@
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { EpisodeCard } from '../components/EpisodeCard'
-import { Heading2 } from '../components/Heading2'
-import {PodcastEpisodeAlreadyPlayed} from "../components/PodcastEpisodeAlreadyPlayed";
-import {$api} from "../utils/http";
-import {LoadingPodcastCard} from "../components/ui/LoadingPodcastCard";
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
+import {Link} from 'react-router-dom'
+import {ArrowRight, Play} from 'lucide-react'
+import {$api} from '../utils/http'
+import {Button} from '../components/ui/button'
+import {ListenEpisodeRow} from '../components/ListenEpisodeRow'
+import {ListenLoading, ListenState} from '../components/ListenState'
+import {clock, minutes, plainText, playEpisode} from '../utils/listening'
 
 export const Homepage = () => {
-    const { t } = useTranslation()
-    const lastWatched = $api.useQuery('get', '/api/v1/podcasts/episode/lastwatched')
-    const timeline = $api.useQuery('get', '/api/v1/podcasts/timeline', {
-        params:{
-            query: {
-                favoredOnly: false,
-                notListened: false,
-                favoredEpisodes: false
-            }
-        }
-    })
-
-    return (
-        <>
-            <PodcastEpisodeAlreadyPlayed/>
-            <div className="mb-8">
-                <Heading2 className="mb-2">{t('last-listened')}</Heading2>
-
-                <div className={`
-                    scrollbox-x
-                    pb-4 pt-8
-                    w-[calc(100vw-2rem)] ${/* viewport - padding */ ''}
-                    xs:w-[calc(100vw-4rem)] ${/* viewport - padding */ ''}
-                    md:w-[calc(100vw-18rem-4rem)] ${/* viewport - sidebar - padding */ ''}
-                `}>
-                    <div className="flex gap-8">
-                        {
-                            lastWatched.isLoading ? Array.from({length: 5}).map((value, index, array)=><LoadingPodcastCard key={index}/>)  :lastWatched.data?.map((v)=>{
-                                    return (
-                                        <div className="basis-40 shrink-0 whitespace-normal" key={v.podcastEpisode.episode_id}>
-                                            <EpisodeCard podcast={v.podcast} podcastEpisode={v.podcastEpisode} podcastHistory={v.episode} />
-                                        </div>
-                                    )
-                                })
-                        }
-
-                    </div>
-                </div>
+    const last = $api.useQuery('get', '/api/v1/podcasts/episode/lastwatched')
+    const shows = $api.useQuery('get', '/api/v1/podcasts')
+    const timeline = $api.useQuery('get', '/api/v1/podcasts/timeline', {params: {query: {favoredOnly: false, notListened: false, favoredEpisodes: false}}})
+    const recent = last.data?.find(item => (item.episode.position ?? 0) > 0 && (item.episode.position ?? 0) < (item.episode.total || item.podcastEpisode.total_time) * .98)
+    if (timeline.isLoading || shows.isLoading) return <ListenLoading/>
+    if (timeline.isError || shows.isError) return <ListenState title="Your library couldn't load" retry={() => {void timeline.refetch(); void shows.refetch()}}>Check your connection and try again.</ListenState>
+    if (!shows.data?.length) return <ListenState title="Add your first podcast"><p>Follow a show to see its episodes here. Your place is saved as you listen.</p><Button className="mt-5" nativeButton={false} render={<Link to="/discover"/>}>Find a podcast <ArrowRight/></Button></ListenState>
+    return <>
+        {recent && <section className="continue-card" aria-labelledby="continue-title">
+            <img src={recent.podcastEpisode.local_image_url} alt=""/>
+            <div><p className="eyebrow" id="continue-title">Continue listening</p><p className="text-sm text-muted-foreground mb-2">{recent.podcast.name}</p>
+                <h2>{plainText(recent.podcastEpisode.name)}</h2>
+                <p className="text-sm text-muted-foreground mt-3">{clock(recent.episode.position ?? 0)} played · {minutes(Math.max(0, recent.podcastEpisode.total_time - (recent.episode.position ?? 0)))} left</p>
+                <div className="flex gap-3 mt-5"><Button size="lg" onClick={() => void playEpisode(recent.podcastEpisode, recent.episode.position ?? 0)}><Play fill="currentColor"/> Resume</Button><Button variant="outline" size="lg" nativeButton={false} render={<Link to={`/learn?episode=${encodeURIComponent(recent.podcastEpisode.episode_id)}`}/>}>Open transcript</Button></div>
             </div>
-            <div>
-                <div className="flex items-center gap-4 mb-2">
-                    <Heading2>{t('latest-episodes')}</Heading2>
-                    <Link className="text-sm ui-text-accent hover:ui-text-accent-hover" to="/timeline">{t('view-more')}</Link>
-                </div>
-
-                <div className={`
-                    scrollbox-x
-                    pb-4 pt-8
-                    w-[calc(100vw-2rem)] ${/* viewport - padding */ ''}
-                    xs:w-[calc(100vw-4rem)] ${/* viewport - padding */ ''}
-                    md:w-[calc(100vw-18rem-4rem)] ${/* viewport - sidebar - padding */ ''}
-                `}>
-                    <div className="flex gap-8">
-                        {timeline.isLoading ? Array.from({length: 10}).map((value, index, array)=><LoadingPodcastCard key={index}/>):timeline.data?.data.map((episode)=>{
-                            return (
-                                <div className="basis-40 shrink-0 whitespace-normal" key={episode.podcast_episode.episode_id}>
-                                    <EpisodeCard podcast={episode.podcast} podcastEpisode={episode.podcast_episode} podcastHistory={episode.history} />
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+        </section>}
+        <section className="home-episodes"><div className="section-heading"><div><h2>Latest episodes</h2><p>Open a brief to decide what to hear. Play the full episode, or make a cut for later.</p></div><Link to="/timeline">View all <ArrowRight size={14}/></Link></div>
+            {timeline.data?.data.length ? timeline.data.data.slice(0, 5).map(item => <ListenEpisodeRow key={item.podcast_episode.id} episode={item.podcast_episode} show={item.podcast} history={item.history} briefAction/>) : <ListenState title="Episodes are on their way">Refresh this page after your feeds have finished loading.</ListenState>}
+        </section>
+        <section className="show-section" aria-label="Your podcasts"><div className="section-heading"><h2>Your podcasts</h2><Link to="/podcasts">View library <ArrowRight size={14}/></Link></div>
+            <div className="show-shelf">{shows.data.slice(0, 6).map(show => <Link key={show.id} className="show-tile" to={`/podcasts/${show.id}/episodes`}><img src={show.image_url} alt=""/><span>{show.name}</span><small>{show.author || 'Podcast'}</small></Link>)}</div>
+        </section>
+    </>
 }

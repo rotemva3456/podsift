@@ -1,0 +1,35 @@
+{
+  "episode_id": "hpr2639",
+  "title": "Making decisions in Bash (part 1)",
+  "show": "HPR Bash Tips",
+  "attribution": "\"Making decisions in Bash (part 1)\" by Dave Morriss, Hacker Public Radio (https://hackerpublicradio.org/), licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). See demo/LICENSE-CONTENT.md.",
+  "transcript": {"format": "timed_json", "path": "demo/library/hpr-bash-tips/hpr2639.timed.json"},
+  "label": {
+    "verdict": "READ",
+    "verdict_reason": "It is a syntax reference (four ways to write a test, how $? works) you look up, not reasoning or a story.",
+    "chapters": [
+      {"segment_index": 68, "title": "Shell arithmetic tests (( ))"},
+      {"segment_index": 127, "title": "Double-bracket extended test [[ ]]"},
+      {"segment_index": 208, "title": "Return status and $?"}
+    ],
+    "key_ideas": [
+      {"text": "Bash offers four kinds of test: the test command / single brackets, shell arithmetic (( )), the double-bracket extended test [[ ]], and functions, commands or programs used as tests.",
+       "segment_indices": [30, 32, 33, 35, 38]},
+      {"text": "A single bracket is a command, so it needs a space after [ and before ]; omitting it concatenates the bracket with the next token and fails with \"command not found\".",
+       "segment_indices": [55, 56, 63]},
+      {"text": "Any command's exit status of 0 means true and any non-zero status means false in Bash, which is the reverse of how many other languages read true/false.",
+       "segment_indices": [83, 84, 85]},
+      {"text": "$? holds the exit status of the last command, and reading it (even with echo) resets it, so a value you need must be captured into a variable before the next command runs.",
+       "segment_indices": [211, 213, 217, 224, 227]},
+      {"text": "[[ ]] does not require double-quoting its left operand the way [ ] does, because word splitting and filename expansion are not performed inside [[ ]].",
+       "segment_indices": [136, 144, 146]}
+    ],
+    "cut_request": {
+      "want": "return status and $? explained",
+      "skip": "shell arithmetic and double bracket syntax details",
+      "minutes": 5,
+      "must_keep_segment_indices": [208, 209, 211, 217, 220, 224, 227],
+      "never_keep_segment_indices": [68, 71, 90, 104, 127, 136, 148]
+    }
+  }
+}

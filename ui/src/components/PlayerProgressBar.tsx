@@ -1,6 +1,7 @@
+// Modified by Podsift contributors, 2026-09-24: Smart Play and sponsor ranges on the bar.
 import React, {FC, useEffect, useMemo, useRef, useState} from 'react'
 import useAudioPlayer, {type AudioPlayerPlay} from '../store/AudioPlayerSlice'
-import {getAudioPlayer} from "../utils/audioPlayer";
+import {getAudioPlayer, SkipRanges} from "../utils/audioPlayer";
 import {usePlaybackLogger} from "../hooks/usePlaybackLogger";
 import {useCastRemote} from "../hooks/useCastRemote";
 
@@ -181,11 +182,12 @@ export const PlayerProgressBar: FC<PlayerProgressBarProps> = ({ className, curre
             <span className={`text-xs text-right ui-text w-12 ${className}`}>{currentTime}</span>
 
             <div
-                className="grow ui-slider-surface cursor-pointer h-1"
+                className="grow ui-slider-surface cursor-pointer h-1 relative"
                 ref={wrapper}
                 onClick={handleWrapperClick}
                 onMouseDown={handleMouseDown}
             >
+                <SkipRanges/>
                 <div className="relative ui-slider-fill h-1 text-right" style={{width: displayPercentage + '%'}}>
                     <span
                         className="absolute -right-1 -top-1 ui-slider-fill h-3 w-3 rounded-full cursor-grab active:cursor-grabbing">

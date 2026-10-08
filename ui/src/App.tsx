@@ -1,3 +1,6 @@
+// Modified by Podsift contributors, 2026-09-22. See CHANGES.md.
+import {Learn} from './pages/Learn'
+import {ListenQueue} from './pages/ListenQueue'
 import {FC, PropsWithChildren, Suspense} from 'react'
 import {createBrowserRouter, createRoutesFromElements, Navigate, Route} from 'react-router-dom'
 import {
@@ -34,10 +37,14 @@ import {UserManagementPage} from "./pages/UserManagement";
 import {GPodderIntegration} from "./pages/GPodderIntegration";
 import {MopidyIntegration} from "./pages/MopidyIntegration";
 import {TagsPage} from "./pages/TagsPage";
+import {routes as featureRoutes, settingsTabs} from "./ext/registry";
 
 export const router = createBrowserRouter(createRoutesFromElements(
     <>
         <Route path="/" element={<Root/>}>
+            <Route path="learn" element={<Learn/>}/>
+            <Route path="notes" element={<Learn notebook/>}/>
+            <Route path="queue" element={<ListenQueue/>}/>
             <Route index element={<Navigate to="home"/>}/>
             <Route path="home" element={<HomePageSelector/>}>
                 <Route index element={<Navigate to="view"/>}/>
@@ -78,6 +85,7 @@ export const router = createBrowserRouter(createRoutesFromElements(
                 <Route path="rescan" element={<SettingsRescan/>}/>
                 <Route path="gpodder" element={<GPodderIntegration/>}/>
                 <Route path="mopidy" element={<MopidyIntegration/>}/>
+                {settingsTabs.map(tab => <Route key={tab.featureId + tab.path} path={tab.path} element={tab.element}/>)}
             </Route>
             <Route path={"administration"} element={<Suspense><UserAdminViewLazyLoad /></Suspense>}>
                 <Route index element={<Navigate to="users"/>}/>
@@ -90,6 +98,7 @@ export const router = createBrowserRouter(createRoutesFromElements(
             <Route path="tags">
                 <Route index element={<TagsPage/>}/>
             </Route>
+            {featureRoutes.map(route => <Route key={route.featureId + route.path} path={route.path} element={<Suspense>{route.element}</Suspense>}/>)}
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/invite/:id" element={<AcceptInvite />}></Route>

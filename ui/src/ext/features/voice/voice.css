@@ -1,0 +1,11 @@
+/* Voice input: notes and Ask by voice. 44px is this feature's own minimum
+   touch target - bigger than the player bar's other, 36-40px round buttons, on purpose: this one
+   is meant to be found without looking, often while driving. */
+.voice-mic-button{width:44px;height:44px;border-radius:50%}
+.voice-mic-button[aria-pressed=true]{animation:voice-pulse 1.2s ease-in-out infinite}
+@keyframes voice-pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.45)}
+    50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}
+}
+.voice-recognition-opt-in{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--muted-foreground);margin-top:10px;max-width:52ch}
+.voice-recognition-opt-in input{margin-top:3px;flex-shrink:0}
