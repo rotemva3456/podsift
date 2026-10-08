@@ -121,8 +121,13 @@ AI chapters and sponsor segments already in them ([browser guide](docs/getting-s
 
 ## Install
 
+For an install using the tested, published images, download and extract the
+[v0.1.0 Docker bundle](https://github.com/rotemva3456/podsift/releases/download/v0.1.0/podsift-0.1.0-docker.tar.gz).
+It includes the public source and MCP package. The [release page](https://github.com/rotemva3456/podsift/releases/tag/v0.1.0)
+has the checksum and validation details. Run the command below in the extracted folder.
+
 Download this repository (GitHub **Code → Download ZIP**) and open a terminal in
-the extracted folder, or clone it with Git. Then run:
+the extracted folder, or clone it with Git, to build the images from source. Then run:
 
 ```bash
 docker compose up -d --wait
@@ -186,8 +191,8 @@ signed-in users, so **only give accounts to people you already trust** — see
 - Once login is **on**, private podcast-app feed links (above) need a normal invited
   account; the `BASIC_AUTH` bootstrap admin can't hold the API key a feed needs then.
 - Load the demo (`docs/getting-started.md`) before you turn login on.
-- The browser tab and iOS's home-screen label still say "Podfetch": PodFetch's backend
-  generates that page itself and hard-codes both.
+- The browser tab still uses PodFetch's upstream title. Docker installs serve a
+  Podsift app manifest for home-screen installation.
 - Publisher transcript timing may remain unchecked. Export reports whether it was
   verified against the downloaded file; Smart Play does not perform that verification.
 
