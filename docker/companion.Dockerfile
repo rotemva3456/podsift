@@ -22,7 +22,12 @@ RUN groupadd --gid 10001 app \
 
 WORKDIR /app
 COPY companion/requirements.txt companion/requirements.txt
-RUN pip install --requirement companion/requirements.txt
+# Use a patched installer during the build, then leave no package installer in the
+# runtime image. The service needs only the installed application dependencies.
+RUN python -m pip install --upgrade pip==26.2.1 \
+    && python -m pip install --requirement companion/requirements.txt \
+    && python -m pip check \
+    && python -m pip uninstall --yes pip
 COPY companion/ companion/
 # COPY keeps the checkout's file modes, which can be private (0600 files, 0700 folders). The
 # companion runs as uid 10001, so everyone may read the code, and only root may change it.

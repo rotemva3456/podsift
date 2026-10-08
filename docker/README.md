@@ -13,7 +13,7 @@ An optional fourth service, **ollama**, runs AI models on your own machine (prof
 You need Docker Engine 25 or newer with Compose 2.24 or newer (`docker compose version`).
 It runs on amd64 and arm64 computers, so a Raspberry Pi 4 or 5 or most NAS boxes work too.
 
-The [v0.1.0 release](https://github.com/rotemva3456/podsift/releases/tag/v0.1.0)
+The [v0.1.1 release](https://github.com/rotemva3456/podsift/releases/tag/v0.1.1)
 provides a Docker bundle using digest-pinned release images, with source and MCP
 included. Extract it and run the same command below; its first start downloads the
 images. GitHub's source ZIP uses the source-building Compose file described here.

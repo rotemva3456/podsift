@@ -42,6 +42,10 @@ were confirmed present in upstream's own tree at the pinned commit before editin
 
 ## Added by Podsift (not from upstream)
 
+- **Companion container maintenance (v0.1.1)** — the Docker build uses a patched
+  Python installer, checks the installed dependencies, and removes the installer
+  from the runtime image. Application behavior and the pinned PodFetch backend
+  are unchanged.
 - **Native content skipping (2026-10-07)** — `companion/engine/skipping.py` detects
   explicitly signalled sponsor reads and the existing optional skip categories from
   timed transcripts, with source line IDs and reasons. Playback uses
