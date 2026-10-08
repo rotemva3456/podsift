@@ -42,6 +42,10 @@ were confirmed present in upstream's own tree at the pinned commit before editin
 
 ## Added by Podsift (not from upstream)
 
+- **Corrected v0.1.1 Docker installer** — `podsift-0.1.1-docker-r2.tar.gz` links
+  to the existing `docs/mcp.md` connection guide and starts with
+  `docker compose up -d --wait`. Runtime images and application code are unchanged;
+  verify the corrected archive with `SHA256SUMS-r2`.
 - **Companion container maintenance (v0.1.1)** — the Docker build uses a patched
   Python installer, checks the installed dependencies, and removes the installer
   from the runtime image. Application behavior and the pinned PodFetch backend
