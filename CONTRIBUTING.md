@@ -12,6 +12,7 @@ FFmpeg/ffprobe. On Ubuntu, the media tools are available with `sudo apt-get inst
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r companion/requirements.txt pytest
+. .venv/bin/activate
 python3 -m venv mcp/.venv && mcp/.venv/bin/pip install -e "./mcp[dev]"
 cd ui && pnpm install --frozen-lockfile && cd ..
 scripts/dev.sh
