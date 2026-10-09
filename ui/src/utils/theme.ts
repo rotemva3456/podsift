@@ -34,7 +34,10 @@ export const applyThemeToDOM = (theme: ThemePreference = getStoredThemePreferenc
         return
     }
 
-    document.documentElement.classList.toggle('dark', isDarkTheme(theme))
+    const dark = isDarkTheme(theme)
+    document.documentElement.classList.toggle('dark', dark)
+    const themeColor = document.querySelector('meta[name="theme-color"]')
+    themeColor?.setAttribute('content', dark ? '#1B211F' : '#F8F6F2')
 }
 
 export const setThemePreference = (theme: ThemePreference) => {

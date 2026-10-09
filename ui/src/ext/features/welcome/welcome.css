@@ -1,17 +1,156 @@
-.welcome-card{padding:22px 24px;border-radius:12px;background:var(--card);border:1px solid var(--border)}
-.welcome-card h2{font-size:19px;font-weight:650;letter-spacing:-.4px}
-.welcome-subtitle{color:var(--muted-foreground);font-size:13px;margin-top:6px}
-.welcome-steps{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:16px}
-.welcome-step{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:16px;border-top:1px solid var(--border)}
-.welcome-step:first-child{padding-top:0;border-top:none}
-.welcome-step h3{font-size:14px;font-weight:600}
-.welcome-step p{color:var(--muted-foreground);font-size:12px;margin-top:4px;max-width:520px}
-.welcome-step-topics{align-items:flex-start;flex-wrap:wrap}
-.welcome-topics{display:flex;flex-direction:column;gap:8px;min-width:240px}
-.welcome-topic-chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0}
-.welcome-topic-chip{display:flex;align-items:center;gap:6px;background:var(--accent);color:var(--primary);font-size:12px;font-weight:600;padding:5px 6px 5px 10px;border-radius:999px}
-.welcome-topic-chip button{display:flex;color:inherit;opacity:.7}
-.welcome-topic-chip button:hover{opacity:1}
-.welcome-topic-form{display:flex;gap:8px}
-.welcome-topic-form input{height:34px;width:180px;background:var(--card);font-size:12px}
-@media(max-width:767px){.welcome-step{flex-direction:column;align-items:flex-start;gap:10px}.welcome-topics{min-width:0;width:100%}.welcome-topic-form{width:100%}.welcome-topic-form input{width:100%}}
+.welcome-card {
+  display:grid;
+  grid-template-columns:minmax(260px,.8fr) minmax(360px,1.2fr);
+  overflow:hidden;
+  margin-bottom:40px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:var(--card)
+}
+.welcome-intro {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  padding:40px;
+  background:var(--accent)
+}
+.welcome-card h2 {
+  font-size:clamp(28px,3vw,38px);
+  line-height:1.08;
+  font-weight:650;
+  letter-spacing:-1.2px;
+  text-wrap:balance
+}
+.welcome-subtitle {
+  max-width:42ch;
+  color:var(--muted-foreground);
+  font-size:15px;
+  line-height:1.6;
+  margin:12px 0 24px;
+  text-wrap:pretty
+}
+.welcome-preferences {
+  padding:30px 32px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center
+}
+.welcome-preference {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:20px 0;
+  border-bottom:1px solid var(--border)
+}
+.welcome-preference:first-child {
+  padding-top:0
+}
+.welcome-preference:last-child {
+  padding-bottom:0;
+  border-bottom:0
+}
+.welcome-preference h3 {
+  font-size:15px;
+  font-weight:600
+}
+.welcome-preference p {
+  color:var(--muted-foreground);
+  font-size:13px;
+  line-height:1.5;
+  margin-top:5px;
+  max-width:48ch
+}
+.welcome-preference-topics {
+  align-items:flex-start;
+  flex-direction:column;
+  gap:14px
+}
+.welcome-topics {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  width:100%
+}
+.welcome-topic-chips {
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:0;
+  margin:0
+}
+.welcome-topic-chip {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--accent);
+  color:var(--accent-foreground);
+  font-size:12px;
+  font-weight:600;
+  padding:5px 6px 5px 10px;
+  border-radius:999px
+}
+.welcome-topic-chip button {
+  display:flex;
+  color:inherit;
+  opacity:.7
+}
+.welcome-topic-chip button:hover {
+  opacity:1
+}
+.welcome-topic-form {
+  display:flex;
+  gap:8px
+}
+.welcome-topic-form input {
+  height:38px;
+  min-width:220px;
+  max-width:360px;
+  background:var(--background);
+  font-size:13px
+}
+@media(max-width:850px) {
+  .welcome-card {
+    grid-template-columns:1fr
+  }
+  .welcome-intro {
+    padding:30px 28px
+  }
+  .welcome-preferences {
+    padding:24px 28px
+  }
+}
+@media(max-width:767px) {
+  .welcome-card {
+    margin-bottom:32px
+  }
+  .welcome-intro {
+    padding:28px 22px
+  }
+  .welcome-card h2 {
+    font-size:30px
+  }
+  .welcome-preferences {
+    padding:22px
+  }
+  .welcome-preference {
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px
+  }
+  .welcome-topic-form {
+    width:100%
+  }
+  .welcome-topic-form input {
+    width:100%;
+    min-width:0;
+    max-width:none;
+    font-size:16px
+  }
+}
+.welcome-intro > [data-slot=button] { min-height: 44px; }
+@media (max-width: 767px) {
+  .welcome-topic-form input { height: 44px; }
+}

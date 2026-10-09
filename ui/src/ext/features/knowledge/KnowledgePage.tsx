@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {ArrowUpRight, Bookmark, Search} from 'lucide-react'
 import {Button} from '../../../components/ui/button'
 import {Input} from '../../../components/ui/input'
-import {Card, CardContent, CardHeader, CardTitle} from '../../../components/ui/card'
+import {Card, CardContent} from '../../../components/ui/card'
 import {ListenLoading, ListenState} from '../../../components/ListenState'
 import {companion, type Note} from '../../../utils/companion'
 import {clock, plainText} from '../../../utils/listening'
@@ -43,21 +43,28 @@ export function KnowledgePage() {
                 {!shown.length ? <ListenState title={t('no-match')}><p>{t('no-match-hint')}</p>
                     <Button variant="outline" className="mt-4" onClick={clear}>{t('clear')}</Button>
                 </ListenState> : <section className="knowledge-list" aria-label={t('list-label')}>
-                    {shown.map(note => <Card key={note.id} className="knowledge-idea">
-                        <CardHeader>
-                            <p className="knowledge-kind"><Bookmark size={13} aria-hidden="true"/>{t(note.kind === 'highlight' ? 'saved-idea' : 'personal-note')}</p>
-                            <CardTitle><Link className="knowledge-source" to={`/learn?episode=${encodeURIComponent(note.episode_id)}&at=${note.start ?? note.position}`}>
-                                <span>{plainText(note.title)}</span><ArrowUpRight size={16} aria-hidden="true"/>
-                            </Link></CardTitle>
-                            <p className="knowledge-location">{clock(note.start ?? note.position)}{note.end != null ? ` – ${clock(note.end)}` : ''}
-                                {' · '}<time dateTime={note.created_at}>{new Date(note.created_at).toLocaleDateString()}</time></p>
-                        </CardHeader>
-                        <CardContent>
-                            {note.quote && <blockquote className="knowledge-quote">{note.quote}</blockquote>}
-                            {(!note.quote || note.text !== note.quote) && <p className="knowledge-note">{note.text}</p>}
-                            <Link className="knowledge-open" to={`/learn?episode=${encodeURIComponent(note.episode_id)}&at=${note.start ?? note.position}`}>{t('open-source')} <ArrowUpRight size={14} aria-hidden="true"/></Link>
-                        </CardContent>
-                    </Card>)}
+                    {shown.map(note => {
+                        const source = `/learn?episode=${encodeURIComponent(note.episode_id)}&at=${note.start ?? note.position}`
+                        return <Card key={note.id} className="knowledge-idea">
+                            <CardContent className="knowledge-idea-content">
+                                <p className="knowledge-kind"><Bookmark size={13} aria-hidden="true"/>{t(note.kind === 'highlight' ? 'saved-idea' : 'personal-note')}</p>
+                                {note.quote ? <blockquote className="knowledge-quote">{note.quote}</blockquote>
+                                    : <p className="knowledge-thought">{note.text}</p>}
+                                {note.quote && note.text !== note.quote && <div className="knowledge-annotation">
+                                    <p className="knowledge-annotation-label">{t('personal-note')}</p>
+                                    <p className="knowledge-note">{note.text}</p>
+                                </div>}
+                                <footer className="knowledge-footer">
+                                    <div className="knowledge-source-meta">
+                                        <Link className="knowledge-source" to={source}><span>{plainText(note.title)}</span><ArrowUpRight size={15} aria-hidden="true"/></Link>
+                                        <p className="knowledge-location">{clock(note.start ?? note.position)}{note.end != null ? ` – ${clock(note.end)}` : ''}
+                                            {' · '}<time dateTime={note.created_at}>{new Date(note.created_at).toLocaleDateString()}</time></p>
+                                    </div>
+                                    <Link className="knowledge-open" to={source}>{t('open-source')} <ArrowUpRight size={14} aria-hidden="true"/></Link>
+                                </footer>
+                            </CardContent>
+                        </Card>
+                    })}
                 </section>}
             </>}
     </>

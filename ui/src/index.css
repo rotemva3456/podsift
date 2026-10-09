@@ -12,22 +12,18 @@
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
 
-  --color-mustard-100: #fae5c0;
-  --color-mustard-200: #fad490;
-  --color-mustard-300: #fac463;
-  --color-mustard-400: #f3ae34;
-  --color-mustard-500: #e69a13;
-  --color-mustard-600: #c07c03;
-  --color-mustard-700: #855602;
-  --color-mustard-800: #4e3201;
-  --color-mustard-900: #271901;
+  --color-mustard-100: var(--accent);
+  --color-mustard-200: var(--accent);
+  --color-mustard-300: var(--accent);
+  --color-mustard-400: var(--primary);
+  --color-mustard-500: var(--primary);
+  --color-mustard-600: var(--primary);
+  --color-mustard-700: var(--primary);
+  --color-mustard-800: var(--primary);
+  --color-mustard-900: var(--primary);
 }
 
-/*
-  shadcn design tokens. Mapped onto the project's existing mustard/stone
-  palette so generated shadcn components inherit the PodFetch look out
-  of the box (mustard accent on stone background).
-*/
+/* Shared semantic tokens for upstream shadcn components. */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -102,193 +98,114 @@
   }
 }
 
+/* Podsift semantic palette. Legacy upstream controls use the aliases below. */
 :root {
     color-scheme: light;
     --date-picker-indicator-filter: none;
-
-    /* shadcn tokens (light) - mapped onto existing mustard/stone palette */
-    --radius: 0.5rem;
-    --background: var(--color-white);
-    --foreground: var(--color-stone-900);
-    --card: var(--color-white);
-    --card-foreground: var(--color-stone-900);
-    --popover: var(--color-white);
-    --popover-foreground: var(--color-stone-900);
-    --primary: var(--color-mustard-600);
-    --primary-foreground: var(--color-white);
-    --secondary: var(--color-stone-100);
-    --secondary-foreground: var(--color-stone-900);
-    --muted: var(--color-stone-100);
-    --muted-foreground: var(--color-stone-500);
-    /* Highlight tokens (hover/focused dropdown items, ...). shadcn's
-       convention has --accent as a subtle wash, but PodFetch reads as a
-       gold-accented product, so we use the full mustard brand color here
-       to keep dropdown highlights, select items etc. clearly gold. */
-    --accent: var(--color-mustard-500);
-    --accent-foreground: var(--color-white);
-    --destructive: var(--color-red-700);
-    --destructive-foreground: var(--color-white);
-    --border: var(--color-stone-200);
-    --input: var(--color-stone-200);
-    --ring: var(--color-mustard-500);
-    --chart-1: var(--color-mustard-600);
-    --chart-2: var(--color-sky-600);
-    --chart-3: var(--color-emerald-600);
-    --chart-4: var(--color-orange-600);
-    --chart-5: var(--color-indigo-600);
-
-    --bg-color: var(--color-white);
-    --fg-color: var(--color-stone-900);
-    --fg-color-hover: var(--color-stone-600);
-    --fg-color-disabled: var(--color-stone-500);
-    --fg-icon-color: var(--color-stone-800);
-    --fg-icon-color-hover: var(--color-stone-600);
-
-    --fg-secondary-color: var(--color-stone-500);
-    --fg-secondary-icon-color: var(--color-stone-400);
-
-    --accent-color: var(--color-mustard-600);
-    --accent-color-hover: var(--color-mustard-500);
-
-    --border-color: var(--color-stone-200);
-
-    --input-bg-color: var(--color-stone-200);
-    --input-fg-color: var(--color-stone-600);
-    --input-fg-color-disabled: var(--color-stone-400);
-    --input-icon-color: var(--color-stone-500);
-
-    --select-text-color: var(--color-stone-600);
-    --select-icon-color: var(--color-stone-500);
-
-    --slider-bg-color: var(--color-stone-300);
-    --slider-fg-color: var(--fg-color);
-
-    --modal-close-color: var(--color-stone-400);
-    --modal-close-color-hover: var(--color-stone-500);
-
-    --sidebar-bg-color: var(--color-stone-950);
-    --sidebar-fg-color: var(--color-white);
-
-    --shadow-opacity: 0.2;
-    --shadow-opacity-hover: 0.5;
-    --sidebar-shadow-color: rgba(0, 0, 0, 0.5);
-    --drawer-shadow-color: rgba(0, 0, 0, 0.15);
-
-    --danger-bg-color: var(--color-red-100);
-    --danger-fg-color: var(--color-red-700);
-    --danger-fg-color-hover: var(--color-red-500);
-
-    --success-fg-color: var(--color-green-700);
-    --success-fg-color-hover: var(--color-green-500);
-
-    --chip-indigo-color: var(--color-indigo-700);
-    --chip-slate-color: var(--color-slate-700);
-    --chip-sky-color: var(--color-sky-700);
-    --chip-orange-color: var(--color-orange-700);
-    --chip-emerald-color: var(--color-emerald-700);
-    --chip-gray-color: var(--color-gray-700);
-    --chip-zinc-color: var(--color-zinc-700);
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --radius: 0.625rem;
+    --background: #F8F6F2;
+    --card: #FFFEFB;
+    --foreground: #252B28;
+    --muted: #EEEFE8;
+    --muted-foreground: #616960;
+    --border: #DEDFD6;
+    --input: #879085;
+    --primary: #A64B34;
+    --primary-foreground: #FFFAF5;
+    --accent: #F3E5DA;
+    --accent-foreground: #7E3828;
+    --destructive: #B52D32;
+    --destructive-foreground: #FFFAF5;
+    --danger-surface: #FCEBEC;
+    --success: #316345;
+    --warning: #805B16;
+    --info: #345F7F;
+    --card-foreground: var(--foreground);
+    --popover: var(--card);
+    --popover-foreground: var(--foreground);
+    --secondary: var(--muted);
+    --secondary-foreground: var(--foreground);
+    --ring: var(--primary);
+    --chart-1: var(--primary);
+    --chart-2: var(--info);
+    --chart-3: var(--success);
+    --chart-4: var(--warning);
+    --chart-5: var(--muted-foreground);
+    --bg-color: var(--background);
+    --fg-color: var(--foreground);
+    --fg-color-hover: var(--primary);
+    --fg-color-disabled: var(--muted-foreground);
+    --fg-icon-color: var(--foreground);
+    --fg-icon-color-hover: var(--primary);
+    --fg-secondary-color: var(--muted-foreground);
+    --fg-secondary-icon-color: var(--muted-foreground);
+    --accent-color: var(--primary);
+    --accent-color-hover: var(--accent-foreground);
+    --border-color: var(--border);
+    --input-bg-color: var(--card);
+    --input-fg-color: var(--foreground);
+    --input-fg-color-disabled: var(--muted-foreground);
+    --input-icon-color: var(--muted-foreground);
+    --select-text-color: var(--foreground);
+    --select-icon-color: var(--muted-foreground);
+    --slider-bg-color: var(--input);
+    --slider-fg-color: var(--primary);
+    --modal-close-color: var(--muted-foreground);
+    --modal-close-color-hover: var(--foreground);
+    --modal-action-color: var(--primary);
+    --modal-action-color-hover: var(--accent-foreground);
+    --sidebar-bg-color: var(--card);
+    --sidebar-fg-color: var(--foreground);
+    --danger-bg-color: var(--danger-surface);
+    --danger-fg-color: var(--destructive);
+    --danger-fg-color-hover: var(--destructive);
+    --success-fg-color: var(--success);
+    --success-fg-color-hover: var(--success);
+    --chip-indigo-color: var(--info);
+    --chip-slate-color: var(--muted-foreground);
+    --chip-sky-color: var(--info);
+    --chip-orange-color: var(--warning);
+    --chip-emerald-color: var(--success);
+    --chip-gray-color: var(--muted-foreground);
+    --chip-zinc-color: var(--muted-foreground);
+    --sidebar: var(--card);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+    --shadow-opacity: 0.12;
+    --shadow-opacity-hover: 0.2;
+    --sidebar-shadow-color: rgb(0 0 0 / 0.08);
+    --drawer-shadow-color: rgb(0 0 0 / 0.12);
 }
 
 :root.dark {
     color-scheme: dark;
-    --date-picker-indicator-filter: invert(1) brightness(0.5);
-
-    /* shadcn tokens (dark) */
-    --background: var(--color-stone-900);
-    --foreground: var(--color-stone-100);
-    --card: var(--color-stone-900);
-    --card-foreground: var(--color-stone-100);
-    --popover: var(--color-stone-800);
-    --popover-foreground: var(--color-stone-100);
-    --primary: var(--color-mustard-500);
-    --primary-foreground: var(--color-stone-900);
-    --secondary: var(--color-stone-800);
-    --secondary-foreground: var(--color-stone-100);
-    --muted: var(--color-stone-800);
-    --muted-foreground: var(--color-stone-400);
-    /* See light root: full mustard for highlight (not the subtle wash). */
-    --accent: var(--color-mustard-600);
-    --accent-foreground: var(--color-stone-100);
-    --destructive: var(--color-red-600);
-    --destructive-foreground: var(--color-stone-100);
-    --border: var(--color-stone-700);
-    --input: var(--color-stone-700);
-    --ring: var(--color-mustard-400);
-    --chart-1: var(--color-mustard-500);
-    --chart-2: var(--color-sky-500);
-    --chart-3: var(--color-emerald-500);
-    --chart-4: var(--color-orange-500);
-    --chart-5: var(--color-indigo-500);
-
-    --bg-color: var(--color-stone-900);
-    --fg-color: var(--color-stone-300);
-    --fg-color-hover: var(--color-stone-500);
-    --fg-color-disabled: var(--color-stone-500);
-    --fg-icon-color: var(--color-stone-400);
-    --fg-icon-color-hover: var(--color-stone-500);
-
-    --fg-secondary-color: var(--color-stone-500);
-    --fg-secondary-icon-color: var(--color-stone-600);
-
-    --accent-color: var(--color-mustard-500);
-    --accent-color-hover: var(--color-mustard-400);
-
-    --border-color: var(--color-stone-700);
-
-    --input-bg-color: var(--color-stone-800);
-    --input-fg-color: var(--color-stone-400);
-    --input-fg-color-disabled: var(--color-stone-600);
-    --input-icon-color: var(--color-stone-500);
-
-    --select-text-color: var(--color-stone-400);
-    --select-icon-color: var(--color-stone-500);
-
-    --slider-bg-color: var(--color-stone-700);
-    --slider-fg-color: var(--fg-color);
-
-    --modal-action-color: var(--color-stone-600);
-    --modal-action-color-hover: var(--color-stone-500);
-
-    --sidebar-bg-color: #161514;
-    --sidebar-fg-color: var(--color-white);
-
-    --shadow-opacity: 0.8;
-    --shadow-opacity-hover: 1;
-    --sidebar-shadow-color: rgba(0, 0, 0, 0.7);
-    --drawer-shadow-color: rgba(0, 0, 0, 0.35);
-
-    --danger-bg-color: var(--color-red-950);
-    --danger-fg-color: var(--color-red-600);
-    --danger-fg-color-hover: var(--color-red-700);
-
-    --success-fg-color: var(--color-green-600);
-    --success-fg-color-hover: var(--color-green-700);
-
-    --chip-indigo-color: var(--color-indigo-400);
-    --chip-slate-color: var(--color-slate-400);
-    --chip-sky-color: var(--color-sky-400);
-    --chip-orange-color: var(--color-orange-400);
-    --chip-emerald-color: var(--color-emerald-400);
-    --chip-gray-color: var(--color-gray-400);
-    /* shadcn sidebar tokens (dark) - matches the existing PodFetch sidebar look */
-    --sidebar: var(--color-stone-950);
-    --sidebar-foreground: var(--color-stone-100);
-    --sidebar-primary: var(--color-mustard-500);
-    --sidebar-primary-foreground: var(--color-stone-900);
-    --sidebar-accent: var(--color-stone-800);
-    --sidebar-accent-foreground: var(--color-stone-100);
-    --sidebar-border: var(--color-stone-800);
-    --sidebar-ring: var(--color-mustard-400);
-    --chip-zinc-color: var(--color-zinc-400);
+    --date-picker-indicator-filter: invert(1);
+    --background: #1B211F;
+    --card: #232B27;
+    --foreground: #F2F2E9;
+    --muted: #2D3731;
+    --muted-foreground: #A8B2A8;
+    --border: #3F4C43;
+    --input: #7F9083;
+    --primary: #E6A58B;
+    --primary-foreground: #241A15;
+    --accent: #3B2D26;
+    --accent-foreground: #F0C4B0;
+    --destructive: #FF9AA0;
+    --destructive-foreground: #331015;
+    --danger-surface: #41252A;
+    --success: #9BCEAC;
+    --warning: #E9C57B;
+    --info: #A0C9EA;
+    --shadow-opacity: 0.3;
+    --shadow-opacity-hover: 0.4;
+    --sidebar-shadow-color: rgb(0 0 0 / 0.2);
+    --drawer-shadow-color: rgb(0 0 0 / 0.3);
 }
 
 * {
@@ -512,13 +429,13 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--input);
     border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--muted-foreground);
 }
 
 #summary a {
@@ -632,6 +549,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 @utility ui-input-surface {
     background-color: var(--input-bg-color);
+    box-shadow: inset 0 0 0 1px var(--input);
 }
 
 @utility ui-input-text {
@@ -722,40 +640,9 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     fill: var(--bg-color);
 }
 
-/*
-  ---break---
-*/
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Upstream fields share the same visible boundaries as newer controls. */
+.ui-input-surface:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+@media (max-width: 767px) {
+  input.ui-input-surface, button.ui-bg-accent, button.ui-border-accent { min-height: 44px; }
+  [role=checkbox].ui-input-surface { min-width: 44px; min-height: 44px; }
 }

@@ -126,7 +126,7 @@ export const EpisodeSearchPage = () => {
     useDebounce(() => setDebouncedTranscriptQuery(transcriptSearchText.trim()), 500, [transcriptSearchText])
 
     const modeButtonClass = (buttonMode: SearchMode) =>
-        `px-4 py-2 text-sm cursor-pointer transition-colors ${mode === buttonMode ? 'ui-bg-accent text-white' : 'ui-text hover:ui-text-hover'}`
+        `px-4 py-2 text-sm cursor-pointer transition-colors ${mode === buttonMode ? 'ui-bg-accent text-primary-foreground' : 'ui-text hover:ui-text-hover'}`
 
     const segmentedControl = (
         <div className="inline-flex rounded-lg border ui-border mb-6 overflow-hidden">

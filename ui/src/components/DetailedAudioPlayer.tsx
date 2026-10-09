@@ -1,3 +1,4 @@
+import {Button} from './ui/button'
 import {FC, useEffect, useRef} from 'react'
 import { createPortal } from 'react-dom'
 import useCommon from '../store/CommonSlice'
@@ -27,6 +28,7 @@ export const DetailedAudioPlayer: FC<DetailedAudioPlayerProps> = ({ audioAmplifi
     const {t} = useTranslation()
     const mediaUrl = currentPodcastEpisode?.podcastEpisode.local_url || currentPodcastEpisode?.podcastEpisode.url
     const isVideoEpisode = isVideoUrl(mediaUrl)
+    const dialogRef = useRef<HTMLDivElement>(null)
     const lastEpisodeIdRef = useRef<string | undefined>(undefined)
 
     useEffect(() => {
@@ -80,11 +82,23 @@ export const DetailedAudioPlayer: FC<DetailedAudioPlayerProps> = ({ audioAmplifi
         }
     }, [])
 
+    useEffect(() => {
+        const previous = document.activeElement as HTMLElement | null
+        dialogRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
+        return () => previous?.focus()
+    }, [])
 
     return createPortal(
-        <div tabIndex={-1} aria-hidden="true" className="grid grid-rows-[1fr_auto] fixed inset-0 ui-surface md:h-full overflow-x-hidden overflow-y-auto z-30" onClick={event => event.stopPropagation()}>
-        <Minimize2 size={28} className="absolute top-2 left-2 cursor-pointer ui-text hover:ui-text-hover"
-              onClick={() => setDetailedAudioPlayerOpen(false)} />
+        <div ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label="Now playing" className="expanded-player grid grid-rows-[1fr_auto] fixed inset-0 ui-surface md:h-full overflow-x-hidden overflow-y-auto z-80" onClick={event => event.stopPropagation()} onKeyDown={event => {
+            if (event.key === 'Escape') setDetailedAudioPlayerOpen(false)
+            if (event.key === 'Tab') {
+                const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input, [tabindex="0"]')].filter(node => node.getClientRects().length)
+                const first = controls[0], last = controls.at(-1)
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
+                if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
+            }
+        }}>
+        <Button variant="ghost" size="icon-lg" className="absolute top-2 left-2" aria-label="Close expanded player" onClick={() => setDetailedAudioPlayerOpen(false)}><Minimize2 size={24}/></Button>
 
             {/* Episode information */}
             <div className="
@@ -109,19 +123,11 @@ export const DetailedAudioPlayer: FC<DetailedAudioPlayerProps> = ({ audioAmplifi
                 <div className="">
                     <ul className="flex flex-wrap gap-2 border-b ui-border mb-6 ui-text-muted">
                         {isVideoEpisode && (
-                            <li onClick={()=>setDetailedAudioPlayerTab('video')} className={`cursor-pointer inline-block px-2 py-4 ${selectedTab === 'video' && 'border-b-2 ui-border-accent ui-text-accent'}`}>
-                                {t('video')}
-                            </li>
+                            <li><Button variant="ghost" aria-pressed={selectedTab === 'video'} onClick={() => setDetailedAudioPlayerTab('video')}>{t('video')}</Button></li>
                         )}
-                        <li onClick={()=>setDetailedAudioPlayerTab('description')} className={`cursor-pointer inline-block px-2 py-4 ${selectedTab === 'description' && 'border-b-2 ui-border-accent ui-text-accent'}`}>
-                            {t('description')}
-                        </li>
-                        <li onClick={()=>setDetailedAudioPlayerTab('chapters')} className={`cursor-pointer inline-block px-2 py-4 ${selectedTab === 'chapters' && 'border-b-2 ui-border-accent ui-text-accent'}`}>
-                            {t('chapters')}
-                        </li>
-                        <li onClick={()=>setDetailedAudioPlayerTab('transcript')} className={`cursor-pointer inline-block px-2 py-4 ${selectedTab === 'transcript' && 'border-b-2 ui-border-accent ui-text-accent'}`}>
-                            {t('transcript')}
-                        </li>
+                        <li><Button variant="ghost" aria-pressed={selectedTab === 'description'} onClick={() => setDetailedAudioPlayerTab('description')}>{t('description')}</Button></li>
+                        <li><Button variant="ghost" aria-pressed={selectedTab === 'chapters'} onClick={() => setDetailedAudioPlayerTab('chapters')}>{t('chapters')}</Button></li>
+                        <li><Button variant="ghost" aria-pressed={selectedTab === 'transcript'} onClick={() => setDetailedAudioPlayerTab('transcript')}>{t('transcript')}</Button></li>
                     </ul>
 
                     <div className="overflow-y-auto overflow-x-hidden max-h-11/12 pr-2">

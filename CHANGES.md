@@ -42,6 +42,17 @@ were confirmed present in upstream's own tree at the pinned commit before editin
 
 ## Added by Podsift (not from upstream)
 
+- **Listening and reading UI refresh (v0.1.2)** — one paper and
+  terracotta theme with complete dark/legacy token mappings; a progress-led Today
+  view, consolidated first-use guidance, readable source and Knowledge layouts,
+  artwork fallbacks, and accessible persistent/expanded player controls. Existing
+  routes, listening state, companion APIs and upstream attribution are retained.
+  This also modifies `ui/src/components/DetailedAudioPlayer.tsx`,
+  `ui/src/components/Notifications.tsx`,
+  `ui/src/components/PlayerTimeControls.tsx`,
+  `ui/src/components/ui/button.tsx`, `ui/src/components/ui/slider.tsx`,
+  `ui/src/index.css`, `ui/src/pages/EpisodeSearchPage.tsx` and
+  `ui/src/utils/theme.ts`.
 - **Corrected v0.1.1 Docker installer** — `podsift-0.1.1-docker-r2.tar.gz` links
   to the existing `docs/mcp.md` connection guide and starts with
   `docker compose up -d --wait`. Runtime images and application code are unchanged;

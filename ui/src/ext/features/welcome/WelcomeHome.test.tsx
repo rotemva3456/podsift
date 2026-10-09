@@ -1,4 +1,4 @@
-// The welcome home card: hidden once the library has a show, the three steps, the AI step's
+// The welcome home card: hidden once the library has a show, optional preferences, the AI setup's
 // connected state, and saving/removing topics through companion/routes/profile.py.
 import {afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
 import {act} from 'react'
@@ -76,7 +76,7 @@ describe('WelcomeHome', () => {
         expect(view.querySelector('.welcome-card')).toBeNull()
     })
 
-    it('shows the three steps when the library is empty, with a link to add a show', async () => {
+    it('shows one welcome action and optional preferences when the library is empty', async () => {
         serve({[SHOWS]: [{status: 200, body: []}], [AI]: [{status: 200, body: {configured: false, provider: 'groq'}}],
             [PROFILE]: [{status: 200, body: {topics: []}}]})
         const view = await show()

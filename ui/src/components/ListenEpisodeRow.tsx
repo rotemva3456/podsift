@@ -1,3 +1,4 @@
+import {PodcastArtwork} from './PodcastArtwork'
 import {BookOpen, Check, ListPlus, Play} from 'lucide-react'
 import {Link} from 'react-router-dom'
 import {Button} from './ui/button'
@@ -10,7 +11,7 @@ export function ListenEpisodeRow({episode, show, history, briefAction = false}: 
     const queued = queue.items.some(item => item.podcastEpisode.episode_id === episode.episode_id)
     const position = history?.position ?? 0
     return <article className="episode-row" data-episode={episode.id}>
-        <img className="episode-cover" src={episode.local_image_url || show?.image_url} alt="" loading="lazy" />
+        <PodcastArtwork className="episode-cover" src={episode.local_image_url || show?.image_url} alt="" loading="lazy" />
         <div className="episode-copy">
             <p className="episode-show">{show?.name ?? new Date(episode.date_of_recording).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}</p>
             <Link className="episode-title" to={`/learn?episode=${encodeURIComponent(episode.episode_id)}`}>{plainText(episode.name)}</Link>

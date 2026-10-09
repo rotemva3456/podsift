@@ -1,3 +1,4 @@
+import {PodcastArtwork} from '../components/PodcastArtwork'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {Link, useSearchParams} from 'react-router-dom'
@@ -24,6 +25,8 @@ export const Learn = ({notebook = false}: {notebook?: boolean}) => {
     }
     return <EpisodeLearn notebook={notebook}/>
 }
+
+const readingScrollBehavior = (): ScrollBehavior => window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth'
 
 const EpisodeLearn = ({notebook = false}: {notebook?: boolean}) => {
     const {t} = useTranslation()
@@ -53,7 +56,7 @@ const EpisodeLearn = ({notebook = false}: {notebook?: boolean}) => {
     const tabsRef = useRef<HTMLDivElement>(null), tabsMounted = useRef(false)
     useEffect(() => {
         if (!tabsMounted.current) {tabsMounted.current = true; return}
-        if (typeof window !== 'undefined' && window.innerWidth <= 767) tabsRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'})
+        if (typeof window !== 'undefined' && window.innerWidth <= 767) tabsRef.current?.scrollIntoView({block: 'start', behavior: readingScrollBehavior()})
     }, [mobilePanel])
     const activeRef = useRef<HTMLLIElement>(null)
     const cache = useQueryClient()
@@ -67,7 +70,7 @@ const EpisodeLearn = ({notebook = false}: {notebook?: boolean}) => {
     const segments = transcript.data?.segments ?? []
     const active = passageAt(segments, sourcePosition)
     const selectedPosition = selected ?? sourcePosition
-    useEffect(() => {if(follow) activeRef.current?.scrollIntoView({block:'nearest', behavior:'smooth'})}, [active, follow])
+    useEffect(() => {if(follow) activeRef.current?.scrollIntoView({block:'nearest', behavior:readingScrollBehavior()})}, [active, follow])
     // ?at=<seconds> opens at the passage holding that time, marked until another moment is chosen.
     const requestedPassage = requested!==null && selected===requested ? passageAt(segments, requested) : -1
     const passagesRef = useRef<HTMLOListElement>(null), openedAt = useRef('')
@@ -92,9 +95,10 @@ const EpisodeLearn = ({notebook = false}: {notebook?: boolean}) => {
     const tool = episodeTools.find(item => mobilePanel === `tool:${item.key}`)
     const panel = mobilePanel.startsWith('tool:') && !tool ? 'transcript' : mobilePanel
     return <div className="learn-source-shell">
-        <div className="flex flex-wrap items-center justify-between gap-2"><Link to="/home/view" className="back-link"><ArrowLeft size={16}/> Back to listening</Link><Button variant="ghost" nativeButton={false} render={<Link to="/learn?source=videos"/>}>Open or add a video</Button></div>
-        <div className="workspace-heading"><img src={current.local_image_url} alt=""/><div><p className="eyebrow">Transcript & notes</p><h1>{plainText(current.name)}</h1><div className="flex gap-3 mt-4"><Button onClick={()=>void playEpisode(current, selectedPosition)}><Play size={15} fill="currentColor"/> Play from {clock(selectedPosition)}</Button>{playing && playing.episode_id !== id && <Button variant="outline" onClick={()=>setParams({episode:playing.episode_id})}>Go to playing episode</Button>}</div></div></div>
-        {episodeHeaders.length > 0 && <details className="source-overview" open={overviewOpen} onToggle={event=>setOverviewOpen(event.currentTarget.open)}><summary>Overview</summary><div className="episode-headers">{episodeHeaders.map(({featureId, Component}) => <Component key={featureId} {...ctx}/>)}</div></details>}
+        <div className="learn-source-nav"><Link to="/home/view" className="back-link"><ArrowLeft size={16}/> Back to listening</Link>
+            {episodeHeaders.length > 0 && <details className="source-overview" open={overviewOpen} onToggle={event=>setOverviewOpen(event.currentTarget.open)}><summary>Overview</summary><div className="episode-headers">{episodeHeaders.map(({featureId, Component}) => <Component key={featureId} {...ctx}/>)}</div></details>}
+            <Button variant="ghost" nativeButton={false} render={<Link to="/learn?source=videos"/>}>Videos</Button></div>
+        <div className="workspace-heading learn-workspace-heading"><PodcastArtwork src={current.local_image_url} alt=""/><div className="learn-heading-copy"><p className="eyebrow">Now reading</p><h1 title={plainText(current.name)}>{plainText(current.name)}</h1><div className="learn-heading-actions"><Button onClick={()=>void playEpisode(current, selectedPosition)}><Play size={15} fill="currentColor"/> Play from {clock(selectedPosition)}</Button>{playing && playing.episode_id !== id && <Button variant="outline" onClick={()=>setParams({episode:playing.episode_id})}>Go to playing episode</Button>}</div></div></div>
         <div className="workspace-tabs" ref={tabsRef} role="group" aria-label="Episode workspace" data-tools={episodeTools.length ? '' : undefined}>{episodeTools.length > 0 && <Button className="workspace-tab-desktop" variant={tool?'ghost':'secondary'} aria-pressed={!tool} onClick={()=>setMobilePanel('transcript')}>{t('transcript')}</Button>}<Button variant={mobilePanel==='transcript'?'secondary':'ghost'} aria-pressed={mobilePanel==='transcript'} onClick={()=>setMobilePanel('transcript')}>Transcript</Button><Button variant={mobilePanel==='ask'?'secondary':'ghost'} aria-pressed={mobilePanel==='ask'} onClick={()=>setMobilePanel('ask')}>Ask</Button><Button variant={mobilePanel==='notes'?'secondary':'ghost'} aria-pressed={mobilePanel==='notes'} onClick={()=>setMobilePanel('notes')}>Notes {notes.data?.length ? `(${notes.data.length})` : ''}</Button>
             {episodeTools.map(item => <Button key={item.key} data-tool={item.key} variant={tool===item?'secondary':'ghost'} aria-pressed={tool===item} onClick={()=>setMobilePanel(`tool:${item.key}`)}>{t(item.label, {ns: item.featureId})}</Button>)}</div>
         <div className="learning-layout" data-panel={panel}>

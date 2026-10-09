@@ -1,3 +1,4 @@
+import {Button} from './ui/button'
 import {FC, useEffect, useMemo} from 'react'
 import {
     SKIPPED_TIME
@@ -182,46 +183,49 @@ export const PlayerTimeControls: FC<PlayerTimeControlsProps> = ({ currentPodcast
         : isPlaying
 
     return (
-        <div className="flex items-center justify-center gap-6">
+        <div className="expanded-time-controls flex items-center justify-center gap-2" onKeyDownCapture={event => {
+            // Focused controls use native activation; global shortcuts still work elsewhere.
+            if ([' ', 'ArrowLeft', 'ArrowRight'].includes(event.key)) event.stopPropagation()
+        }}>
             {/* Skip back 30s */}
-            <button
+            <Button variant="ghost" size="icon-lg"
                 onClick={() => seekBackward()}
                 className="relative cursor-pointer ui-text hover:ui-text-hover active:scale-90"
                 aria-label="Skip back 30 seconds"
             >
-                <RotateCcw size={26} />
+                <RotateCcw className="size-6" />
                 <span className="absolute inset-0 grid place-items-center text-[8px] font-bold mt-0.5">30</span>
-            </button>
+            </Button>
 
             {/* Previous */}
-            <button disabled={!hasPrevious} className={cn("cursor-pointer ui-text hover:ui-text-hover active:scale-90", hasPrevious ? '' : 'opacity-10')} onClick={() => skipToPreviousEpisode()}>
-                <SkipBack size={30} fill="currentColor" />
-            </button>
+            <Button variant="ghost" size="icon-lg" aria-label="Previous episode" disabled={!hasPrevious} className={cn("cursor-pointer ui-text hover:ui-text-hover active:scale-90", hasPrevious ? '' : 'opacity-10')} onClick={() => skipToPreviousEpisode()}>
+                <SkipBack className="size-6" fill="currentColor" />
+            </Button>
 
             {/* Play/pause */}
-            <span className="flex items-center justify-center ui-bg-foreground hover:bg-(--fg-color-hover) cursor-pointer h-10 w-10 lg:h-12 lg:w-12 rounded-full active:scale-90" onClick={() => handleButton()}>
+            <Button size="icon-lg" className="round-play" aria-label={isCurrentlyPlaying ? 'Pause' : 'Play'} onClick={() => handleButton()}>
                 {isCurrentlyPlaying
-                    ? <Pause size={22} fill="currentColor" className="ui-text-inverse" />
-                    : <Play size={22} fill="currentColor" className="ui-text-inverse ml-0.5" />}
-            </span>
+                    ? <Pause size={22} fill="currentColor" className="size-5" />
+                    : <Play size={22} fill="currentColor" className="size-5 ml-0.5" />}
+            </Button>
 
             {/* Next */}
-            <button disabled={!hasNext} className={cn("cursor-pointer ui-text hover:ui-text-hover active:scale-90", hasNext ? '' : 'opacity-10')} onClick={() => skipToNextEpisode()}>
-                <SkipForward size={30} fill="currentColor" />
-            </button>
+            <Button variant="ghost" size="icon-lg" aria-label="Next episode" disabled={!hasNext} className={cn("cursor-pointer ui-text hover:ui-text-hover active:scale-90", hasNext ? '' : 'opacity-10')} onClick={() => skipToNextEpisode()}>
+                <SkipForward className="size-6" fill="currentColor" />
+            </Button>
 
             {/* Skip forward 30s */}
-            <button
+            <Button variant="ghost" size="icon-lg"
                 onClick={() => seekForward()}
                 className="relative cursor-pointer ui-text hover:ui-text-hover active:scale-90"
                 aria-label="Skip forward 30 seconds"
             >
-                <RotateCw size={26} />
+                <RotateCw className="size-6" />
                 <span className="absolute inset-0 grid place-items-center text-[8px] font-bold mt-0.5">30</span>
-            </button>
+            </Button>
 
             {/* Speed fixed width to prevent layout shift when value changes */}
-            <span className="cursor-pointer text-sm ui-text hover:ui-text-hover w-8" onClick={() => changeSpeed()}>{speed}x</span>
+            <Button variant="ghost" size="icon-lg" aria-label={`Playback speed ${speed} times`} onClick={() => changeSpeed()}>{speed}×</Button>
         </div>
     )
 }

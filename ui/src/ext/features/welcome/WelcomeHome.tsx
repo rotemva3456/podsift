@@ -1,7 +1,5 @@
-// The welcome home card: three quick steps, shown only
-// while the library is empty. Step 1 reuses PodFetch's own /discover page and "Add podcast"
-// button; step 2 links to the ai-settings feature's Settings tab; step 3 saves this listener's
-// topics to companion/routes/profile.py.
+// The welcome home card is shown only while the library is empty. Its primary action reuses
+// PodFetch's /discover page; AI setup and listener topics remain optional preferences.
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
@@ -54,26 +52,26 @@ export function WelcomeHome() {
     const ai = useQuery({queryKey: AI_STATUS_KEY, queryFn: getAiStatus, staleTime: 60_000, retry: false})
     if (shows.isLoading || shows.isError || (shows.data?.length ?? 0) > 0) return null
     const connected = ai.data?.configured ?? false
-    return <section className="welcome-card">
-        <h2>{t('title')}</h2>
-        <p className="welcome-subtitle">{t('subtitle')}</p>
-        <ol className="welcome-steps">
-            <li className="welcome-step">
-                <div><h3>{t('step-1-title')}</h3><p>{t('step-1-body')}</p></div>
-                <Button size="sm" nativeButton={false} render={<Link to="/discover"/>}><Plus size={14}/> {t('step-1-cta')}</Button>
-            </li>
-            <li className="welcome-step">
+    return <section className="welcome-card" aria-labelledby="welcome-title">
+        <div className="welcome-intro">
+            <p className="eyebrow">{t('step-1-title')}</p>
+            <h2 id="welcome-title">{t('title')}</h2>
+            <p className="welcome-subtitle">{t('step-1-body')} Follow one podcast and its latest episodes will appear here.</p>
+            <Button size="lg" nativeButton={false} render={<Link to="/discover"/>}><Plus/> {t('step-1-cta')}</Button>
+        </div>
+        <div className="welcome-preferences">
+            <div className="welcome-preference">
                 <div><h3>{t('step-2-title')}</h3>
                     <p>{connected ? t('step-2-connected', {provider: capitalize(ai.data!.provider)}) : t('step-2-body')}</p>
                 </div>
-                {!connected && <Button size="sm" variant="outline" nativeButton={false} render={<Link to="/settings/ai"/>}>
+                {!connected && <Button size="sm" variant="ghost" nativeButton={false} render={<Link to="/settings/ai"/>}>
                     <Sparkles size={14}/> {t('step-2-cta')}
                 </Button>}
-            </li>
-            <li className="welcome-step welcome-step-topics">
+            </div>
+            <div className="welcome-preference welcome-preference-topics">
                 <div><h3>{t('step-3-title')}</h3><p>{t('step-3-body')}</p></div>
                 <TopicsEditor/>
-            </li>
-        </ol>
+            </div>
+        </div>
     </section>
 }

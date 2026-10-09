@@ -4,12 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#F8F6F2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Podsift" />
     <link rel="apple-touch-icon" href="apple-touch-icon-180x180.png" />
     <title>Podsift</title>
+    <script>
+      // Apply the stored preference before paint, including system dark mode.
+      try {
+        const theme = localStorage.getItem('theme');
+        const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+        document.querySelector('meta[name="theme-color"]').content = dark ? '#1B211F' : '#F8F6F2';
+      } catch {}
+    </script>
     <link rel="manifest" href="manifest.webmanifest" />
   </head>
   <body>

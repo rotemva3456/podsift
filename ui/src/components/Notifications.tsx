@@ -146,7 +146,7 @@ export const Notifications: FC = () => {
                         )}
 
                         {unreadCount > 0 && (
-                            <span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full px-1 text-[0.625rem] font-semibold text-white ui-bg-accent">
+                            <span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full px-1 text-[0.625rem] font-semibold text-primary-foreground ui-bg-accent">
                                 {unreadCountLabel}
                             </span>
                         )}

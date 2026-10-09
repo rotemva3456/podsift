@@ -184,6 +184,18 @@ export const PlayerProgressBar: FC<PlayerProgressBarProps> = ({ className, curre
             <div
                 className="grow ui-slider-surface cursor-pointer h-1 relative"
                 ref={wrapper}
+                role="slider" tabIndex={0} aria-label="Playback position" aria-valuemin={0} aria-valuemax={metadata?.duration || 0} aria-valuenow={displayedSeconds || 0} aria-valuetext={currentTime}
+                onKeyDown={event => {
+                    if (!metadata?.duration || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+                    event.preventDefault(); event.stopPropagation()
+                    const target = Math.max(0, Math.min(metadata.duration, event.key === 'Home' ? 0 : event.key === 'End' ? metadata.duration : (displayedSeconds || 0) + (event.key === 'ArrowRight' ? 5 : -5)))
+                    if (cast.isCasting) { void cast.seek(target); return }
+                    const audio = getAudioPlayer()
+                    if (!audio) return
+                    audio.currentTime = target
+                    setCurrentTimeUpdatePercentage(target / metadata.duration * 100)
+                    if (currentPodcastEpisode) logCurrentPlaybackTime(currentPodcastEpisode.podcastEpisode.episode_id, target)
+                }}
                 onClick={handleWrapperClick}
                 onMouseDown={handleMouseDown}
             >

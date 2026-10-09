@@ -68,6 +68,10 @@ not a measure of understanding. [Product contract and current limits](docs/agent
 Use the browser to listen, inspect transcripts and plans, or use the app's own AI
 provider for briefs and cuts. These controls supplement the agent workflow.
 
+![Podsift Today view with a sample networking episode and player](docs/podsift-v0.1.2-sample-today.png)
+
+*Sample content from the synthetic UI fixture; no personal library data is shown.*
+
 ![Get a brief, plan a Cut, then Smart Play skips it live](docs/demo.gif)
 
 - **Brief:** a summary, a HEAR / READ / SKIP verdict, and chapters. HEAR means the value

@@ -26,7 +26,7 @@ function VideoLibrary() {
         return uploadVideo(selected, controller.current.signal)
     }, onSuccess: source => {if (!controller.current?.signal.aborted) navigate(`/learn?video=${source.id}`)}})
     useEffect(() => () => controller.current?.abort(), [])
-    return <div className="space-y-6 max-w-4xl mx-auto">
+    return <div className="video-workspace video-library space-y-6 max-w-4xl mx-auto">
         <Link to="/home/view" className="back-link"><ArrowLeft size={16}/> Back to listening</Link>
         <div className="page-title"><h1>Learn from a video</h1><p>Bring a downloaded lesson or recording. Keep its words and original moments together.</p></div>
         <Card><CardHeader><CardTitle><Upload className="inline mr-2" size={18}/> Add a video</CardTitle></CardHeader><CardContent className="space-y-3">
@@ -95,7 +95,7 @@ function VideoDetail({id, at}: {id: string; at?: number}) {
     const transcript = words.data?.pages.flatMap(page => page.segments) ?? []
     const result = current.learning
     const doAction = (kind: 'transcribe' | 'learn' | 'visual-review', task?: 'summary' | 'watch_plan') => {action.mutate({kind, task})}
-    return <div className="space-y-5 min-w-0">
+    return <div className="video-workspace video-detail space-y-5 min-w-0">
         <Link to="/learn?source=videos" className="back-link"><ArrowLeft size={16}/> Your videos</Link>
         <div><p className="eyebrow">Original video</p><h1 className="text-2xl font-medium break-words mt-1">{current.title}</h1><p className="text-sm text-muted-foreground mt-2">{clock(current.duration)} · {current.has_transcript ? 'Full audio processed · screen not analyzed' : 'Saved and ready to play'}</p></div>
         <div className="grid lg:grid-cols-2 gap-6 items-start">
@@ -153,13 +153,13 @@ function VideoDetail({id, at}: {id: string; at?: number}) {
                     {result.moments.length > 0 && <ol className="space-y-4">{result.moments.map((moment, index) => <li key={index}>
                         <Button variant="link" className="h-auto whitespace-normal text-left justify-start p-0" onClick={() => seek(moment.start)}><Play size={14}/>{clock(moment.start)}–{clock(moment.end)} · {moment.title}</Button><p className="text-sm mt-1">{moment.why}</p>{moment.action === 'check_screen' && <p className="text-xs text-muted-foreground mt-1">Check the screen here; speech alone does not establish what is shown.</p>}
                     </li>)}</ol>}
-                    <ul className="space-y-4">{result.points.map((point, index) => <li key={index}><p className="text-sm leading-relaxed">{point.text}</p><div className="flex flex-wrap gap-2">{point.sources.map(passage => <Button key={passage.id} variant="link" className="px-0 h-7" onClick={() => seek(passage.start)}>Source {clock(passage.start)}</Button>)}</div></li>)}</ul>
+                    <ul className="space-y-4 video-learning-points">{result.points.map((point, index) => <li key={index}><p>{point.text}</p><div className="flex flex-wrap gap-2">{point.sources.map(passage => <Button key={passage.id} variant="link" className="px-0 h-7" onClick={() => seek(passage.start)}>Source {clock(passage.start)}</Button>)}</div></li>)}</ul>
                     <p className="text-sm text-muted-foreground">{result.caveat}</p>
                     <p className="text-xs text-muted-foreground">Full audio processed. Visuals have not been analyzed.</p>
                 </div> : !current.has_transcript ? <p className="text-sm text-muted-foreground">Your timed words will appear here after transcription. You can watch the video now.</p> : words.isLoading ? <ListenLoading/> : words.isError && !words.data ? <ListenState title="Transcript couldn't load" retry={() => void words.refetch()}/> : <>
                     <p className="text-xs text-muted-foreground">{words.data?.pages[0]?.total_segments ?? 0} timed passages · click a time to return to the source.</p>
-                    <ol className="space-y-4 max-h-[36rem] overflow-y-auto pr-2">{transcript.map(passage => <li key={passage.id} className="border-l-2 pl-3" style={{borderColor: passage.start <= position && position < (passage.end ?? Infinity) ? 'var(--primary)' : 'transparent'}}>
-                        <Button variant="link" className="h-7 px-0" onClick={() => seek(passage.start)}>{clock(passage.start)}</Button><p className="text-sm leading-relaxed">{passage.text}</p>
+                    <ol className="video-transcript space-y-4 max-h-[36rem] overflow-y-auto pr-2">{transcript.map(passage => <li key={passage.id} className="border-l-2 pl-3" style={{borderColor: passage.start <= position && position < (passage.end ?? Infinity) ? 'var(--primary)' : 'transparent'}}>
+                        <Button variant="link" className="h-7 px-0" onClick={() => seek(passage.start)}>{clock(passage.start)}</Button><p>{passage.text}</p>
                     </li>)}</ol>
                     {words.hasNextPage && <Button variant="outline" disabled={words.isFetchingNextPage} onClick={() => void words.fetchNextPage()}>Read more transcript</Button>}
                     {words.isError && words.data && <p role="alert" className="text-sm text-destructive">More words couldn't load. The loaded passages are still available.</p>}
