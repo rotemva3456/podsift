@@ -126,9 +126,10 @@ AI chapters and sponsor segments already in them ([browser guide](docs/getting-s
 ## Install
 
 For an install using the tested, published images, download and extract the
-[v0.1.1 Docker bundle](https://github.com/rotemva3456/podsift/releases/download/v0.1.1/podsift-0.1.1-docker-r2.tar.gz).
-It includes the public source and MCP package. The [release page](https://github.com/rotemva3456/podsift/releases/tag/v0.1.1)
+[v0.1.2 Docker bundle](https://github.com/rotemva3456/podsift/releases/download/v0.1.2/podsift-0.1.2-docker.tar.gz).
+It includes the public source and MCP package. The [release page](https://github.com/rotemva3456/podsift/releases/tag/v0.1.2)
 has the checksum and validation details. Run the command below in the extracted folder.
+The previous v0.1.1 installer remains available on its release page.
 
 Download this repository (GitHub **Code → Download ZIP**) and open a terminal in
 the extracted folder, or clone it with Git, to build the images from source. Then run:
